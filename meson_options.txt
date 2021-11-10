@@ -1,0 +1,6 @@
+option(
+  'libraries',
+  description: 'Compile Zigen libraries',
+  type: 'boolean',
+  value: 'true',
+)

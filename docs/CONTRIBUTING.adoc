@@ -1,0 +1,7 @@
+= Contributing to Zigen
+
+== How to create a Pull Request
+
+. Fork this repository.
+. Push your changes to a branch in your repository.
+. Submit these changes for review throw a pull request.

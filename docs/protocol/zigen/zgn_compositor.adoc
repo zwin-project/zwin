@@ -1,0 +1,7 @@
+= zgn_compositor
+
+zigen compositorにおいて最も基本なGlobal object.
+
+== create_virtual_object
+
+zgn_virtual_objectを作る.

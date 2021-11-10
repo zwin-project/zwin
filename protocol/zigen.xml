@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocol name="zigen">
+  <copyright>Apache-2.0</copyright>
+  <interface name="zgn_compositor" version="1">
+    <description summary="http://github.com/zigen-project/zigen/blob/main/doc/protocol/zigen/zgn_compositor.md"/>
+    <request name="create_virtual_object">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/doc/protocol/zigen/zgn_compositor.md#create_virtual_object"/>
+      <arg name="id" type="new_id" interface="zigen_virtual_object"/>
+    </request>
+  </interface>
+
+  <interface name="zgn_virtual_object" version="1">
+    <description summary="http://github.com/zigen-project/zigen/blob/main/doc/protocol/zigen/zgn_virtual_object.md"/>
+    <request name="destroy" type="destructor">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/doc/protocol/zigen/zgn_virtual_object.md#destroy"/>
+    </request>
+  </interface>
+</protocol>

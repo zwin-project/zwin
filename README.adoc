@@ -1,7 +1,23 @@
 =  Zigen
 
-image:./doc/images/logo_with_sm_padding.svg[width=200px]
+image::https://github.com/zigen-project/zigen/actions/workflows/test.yaml/badge.svg[link="https://github.com/zigen-project/zigen/actions/workflows/test.yaml"]
+
+image:./docs/images/logo_with_sm_padding.svg[width=200px]
 
 Zigen is a project to define a protocol for the 3D Windowing System on top of https://wayland.freedesktop.org/[Wayland].
 
 This zigen library provides a communication protocol and library implementation of the protocol.
+
+== Build & Install
+
+[source, shell]
+----
+$ git clone https://github.com/zigen-project/zigen.git
+$ cd zigen
+$ meson build
+$ ninja -C build install
+----
+
+== Contributing
+
+See link:./docs/CONTRIBUTING.adoc[contribution doc].
