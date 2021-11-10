@@ -1,0 +1,7 @@
+=  Zigen
+
+image:./doc/images/logo_with_sm_padding.svg[width=200px]
+
+Zigen is a project to define a protocol for the 3D Windowing System on top of https://wayland.freedesktop.org/[Wayland].
+
+This zigen library provides a communication protocol and library implementation of the protocol.
