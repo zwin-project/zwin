@@ -1,0 +1,7 @@
+= virtual_object
+
+"Virtual Object" is a concept which represents a unit of interactive 3D object.
+
+== destroy
+
+destructor
