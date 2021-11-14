@@ -1,0 +1,42 @@
+= zgn_opengl
+
+The zgn_opengl interface is exposed as a global object enabling clients to draw
+contents of virtual objects using OpenGL like APIs.
+
+== vertex_attribute_type
+`enum`
+
+Please refer the specification of OpenGL `glVertexAttribPointer` (type param)
+for details.
+
+== topology
+`enum`
+
+Please refer the specification of OpenGL `glDrawArrays` (mode param) for
+details.
+
+== destroy
+`request`
+
+Using this request a client can tell the server that it is not going to use the
+zgn_opengl object anymore.
+
+== create_opengl_component
+`request`
+
+Ask the compositor to create a new zgn_opengl_component object.
+
+== create_vertex_buffer
+`request`
+
+Ask the compositor to create a new zgn_opengl_vertex_buffer object.
+
+== create_shader_program
+`request`
+
+Ask the compositor to create a new zgn_shader_program object.
+
+== create_texture
+`request`
+
+Ask the compositor to create a new zgn_texture_program object.

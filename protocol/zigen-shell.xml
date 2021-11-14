@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocol name="zigen_shell">
+  <copyright>Apache-2.0</copyright>
+
+  <interface name="zgn_shell" version="1">
+    <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_shell.adoc"/>
+
+    <enum name="error">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_shell.adoc#error"/>
+      <entry name="role" value="0"/>
+      <entry name="defunct_virtual_object" value="1"/>
+      <entry name="invalid_cuboid_window_size" value="2"/>
+    </enum>
+
+    <request name="destroy" type="destructor">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_shell.adoc#destroy"/>
+    </request>
+
+    <request name="get_cuboid_window">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_shell.adoc#get_cuboid_window"/>
+      <arg name="id" type="new_id" interface="zgn_cuboid_window"/>
+      <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
+      <arg name="half_size" type="array"/>
+    </request>
+  </interface>
+
+  <interface name="zgn_cuboid_window" version="1">
+    <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_cuboid_window.adoc"/>
+
+    <request name="ack_configure">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_cuboid_window.adoc#ack_configure"/>
+      <arg name="serial" type="uint"/>
+    </request>
+
+    <event name="configure">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_cuboid_window.adoc#configure"/>
+      <arg name="serial" type="uint"/>
+      <arg name="half_size" type="array"/>
+    </event>
+
+    <request name="move">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_cuboid_window.adoc#move"/>
+      <arg name="seat" type="object" interface="zgn_seat"/>
+      <arg name="serial" type="uint"/>
+    </request>
+  </interface>
+</protocol>

@@ -1,0 +1,59 @@
+= zgn_shell
+
+The zgn_shell interface is exposed as a global object enabling clients to turn
+their zgn_virtual_objects into cuboid windows. It defines basic functionality
+needed for clients and the compositor to create cuboid windows that can be
+dragged, resized, rotated, etc, as well as transient cuboid windows such as
+preview objects during drag & drop action.
+
+== error
+`enum`
+
+|===
+|entry|description
+
+|role
+|given virtual object has another role
+
+|defunct_virtual_object
+|xgn_shell was destroyed before children
+
+|invalid_cuboid_window_size
+|given cuboid window size is invalid
+|===
+
+== destroy
+`request`
+
+Destroy this zgn_shell object.
+
+Destroying a bound zgn_shell object while there are surfaces still alive
+created by this zgn_shell object instance is illegal and will result in
+zgn_shell.defunct_virtual_object error.
+
+== get_cuboid_window
+`request`
+
+This creates an zgn_cuboid_window object for the given zgn_virtual_object and
+gives the cuboid window role to the virtual object.
+
+The compositor uses the half_size argument as a hint of the size of a new cuboid
+window. The client should not rely on the compositor to obey the value. The
+compositor may decide to ignore the value.
+
+The half_size argument should be a float array of size 3, and each float value
+should be greater then zero. Otherwise, the request will be
+invalid_cuboid_window_size error.
+
+|===
+|arg|description
+
+|id
+|cuboid window to create
+
+|virtual_object
+|
+
+|half_size
+|The half size of the cuboid window to create. This is just a hint. (vec3)
+|===

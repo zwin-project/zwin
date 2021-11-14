@@ -10,6 +10,8 @@ tests = {
     'env': {
       'WAYLAND_DTD_PATH': wayland_dtd,
       'ZIGEN_XML': zigen_xml_abs_path,
+      'ZIGEN_SHELL_XML': zigen_shell_xml_abs_path,
+      'ZIGEN_OPENGL_XML': zigen_opengl_xml_abs_path,
     },
     'deps': [ dependency('libxml-2.0') ]
   }

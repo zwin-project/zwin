@@ -1,0 +1,122 @@
+= zgn_ray
+
+The zgn_ray interface represents a 3D input device which has a origin point and
+direction such as 6DoF input device.
+
+The zgn_ray interface generate motion, enter and leave events for the virtual
+object that the ray intersects, and button and axis events for button presses,
+button releases and scrolling.
+
+The way to judge the ray intersection should be defined in the role of
+zgn_virtual_object. Ray will not intersect with virtual object without
+a role or with a role which has no definition regarding the ray intersection.
+
+== enter
+`event`
+
+Notification that this seat's ray is focused on a certain virtual object
+
+The origin and direction arguments must be float vectors of size 3, and the
+direction vector must be normalized.
+
+// TODO: Add description which correspond to the usage of set_cursor in wl_pointer
+
+|===
+|arg|description
+
+|serial
+|serial number of the enter event
+
+|virtual_object
+|virtual object intersected by the ray
+
+|origin
+|ray origin in the virtual-object-local coordinate system (vec3)
+
+|direction
+|ray direction in the virtual-object-local coordinate system (vec3 normalized).
+|===
+
+== leave
+`event`
+
+Notification that his seat's ray is no longer focused on a certain virtual
+object.
+
+|===
+|arg|description
+
+|serial
+|serial number of the leave event
+
+|virtual_object
+|virtual object left by the ray
+|===
+
+== motion
+`event`
+
+Notification of ray position change. The arguments ray_origin and ray_direction
+are described in the virtual-object-local coordinate system.
+
+The origin and direction arguments must be float vectors of size 3, and the
+direction vector must be normalized.
+
+|===
+|arg|description
+
+|time
+|timestamp with millisecond granularity
+
+|origin
+|ray origin in the virtual-object-local coordinate system (vec3)
+
+|direction
+|ray direction in the virtual-object-local coordinate system (vec3 normalized)
+|===
+
+== button_state
+`enum`
+
+|===
+|entry|description
+
+|released
+|the button is not pressed
+
+|pressed
+|the button is pressed
+|===
+
+== button
+`event`
+
+Notification that a button attached to the ray device is clicked or released.
+
+The button argument is a button code as defined in the Linux kernel's
+linux/input-event-codes.h header file, e.g. BTN_LEFT.
+
+Any 16-bit button code value is reserved for future additions to the kernel's
+event code list. All other button codes above 0xFFFF are currently undefined
+but may be used in future version of this protocol.
+
+|===
+|arg|description
+
+|serial
+|serial number of the button event
+
+|time
+|timestamp with millisecond granularity, with an undefined base
+
+|button
+|button that produced the event
+
+|state
+|physical state of the button
+|===
+
+== release
+
+Using this request, a client can tell the server that it is not going to use
+the ray object anymore.
