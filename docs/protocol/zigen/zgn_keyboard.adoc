@@ -1,0 +1,156 @@
+= zgn_keyboard
+
+The zgn_keyboard interface represents one or more keyboards associated with a
+seat.
+
+== keymap_format
+`enum`
+
+This specifies the format of the keymap provided to the client with the
+zgn_keyboard.keymap event.
+
+|===
+|entry|description
+
+|no_keymap
+|no keymap; client must understand how to interpret the raw keycode
+
+|xkb_v1
+|libxkbcommon compatible; to determine the xkb keycode, clients must add 8 to the key event keycode
+|===
+
+== keymap
+`event`
+
+This event provides a file descriptor to the client which can be memory-mapped
+in read-only mode to provide a keyboard mapping description.
+
+The fd must be mapped with MAP_PRIVATE by the recipient, as MAP_SHARED may fail.
+
+|===
+|arg|description
+
+|format
+|keymap format
+
+|fd
+|keymap file file descriptor
+
+|size
+|keymap size, in bytes
+|===
+
+== enter
+`event`
+
+Notification that this seat's keyboard focus is on a certain virtual object.
+
+The compositor must send the wl_keyboard.modifiers event after this event.
+
+|===
+|arg|description
+
+|serial
+|serial number of the enter event
+
+|virtual_object
+|virtual object gaining keyboard focus
+
+|keys
+|the currently pressed keys
+|===
+
+== leave
+`event`
+
+Notification that this seat's keyboard focus is no longer on a certain virtual object.
+
+The leave notification is sent before the enter notification for the new focus.
+
+After this event, client must assume that all keys, including modifiers, are
+lifted and also it must stop key repeating if there's some going on.
+
+|===
+|arg|description
+
+|serial
+|serial number of the leave event
+
+|virtual_object
+|virtual object that lost keyboard focus
+|===
+
+== key_state
+`enum`
+
+Describes the physical state of a key that produced the key event.
+
+|===
+|entry|description
+
+|released
+|key is not pressed
+
+|pressed
+|key is pressed
+|===
+
+== key
+`event`
+
+A key was pressed or released.
+The time argument is a timestamp with millisecond granularity, with an
+undefined base.
+
+The key is a platform-specific key code that can be interpreted by feeding it
+to the keyboard mapping (see the keymap event).
+
+It this event produces a change in modifiers, then the resulting
+zgn_keyboard.modifiers event must be sent after this event.
+
+|===
+|arg|description
+
+|serial
+|serial number of the key event
+
+|time
+|timestamp with millisecond granularity
+
+|key
+|key that produced the event
+
+|state
+|physical state of the key
+|===
+
+== modifiers
+`event`
+
+Notification that the modifier and/or group state has changed, and it should
+update its local state.
+
+|===
+|arg|description
+
+|serial
+|serial number of the modifiers event
+
+|mods_depressed
+|depressed modifiers
+
+|mods_latched
+|latched modifiers
+
+|mods_locked
+|locked modifiers
+
+|group
+|keyboard layout
+|===
+
+== release
+`request`
+
+Using this request, a client can tell the server that it is not going to use
+the keyboard object anymore.

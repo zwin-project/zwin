@@ -1,0 +1,61 @@
+= zgn_opengl_shader_program
+
+This is a interface to create and build shader programs.
+
+A zgn_opengl_shader_program which has not been called
+zgn_opengl_shader_program.link is useless. Clients need to call
+zgn_opengl_shader_program.link before the zgn_virtual_object.commit
+to use the shader programs for the rendering in the commit.
+
+== error
+`enum`
+
+|===
+|entry|description
+
+|compilation_error
+|failed to compile shaders
+
+|linkage_error
+|failed to link program objects
+|===
+
+== destroy
+`request`
+
+Destroy a zgn_opengl_shader_program object.
+The shader program will be detached from any associated virtual objects first,
+then destroyed.
+
+== set_vertex_shader
+`request`
+
+Set the contents of vertex shader. The compositor reads and compiles the shader
+immediately, and if the compilation fails, the request raises compilation_error.
+
+Clients need to call zgn_opengl_shader_program.link after this request to apply
+the changes.
+
+The contents of vertex buffer are double-buffered state.
+
+== set_fragment_shader
+`request`
+
+Set the contents of fragment shader. The compositor reads and compiles the
+shader immediately, and if the compilation fails, the request raises
+compilation_error.
+
+Clients need to call zgn_opengl_shader_program.link after this request to apply
+the changes.
+
+The contents of fragment buffer are double-buffered state.
+
+== link
+`request`
+
+This request links the shader programs set to a zgn_opengl_shader_program before
+this request. If it fails to link, this request raises linkage_error.
+
+From the next zgn_virtual_object.commit, the changes to the shader programs
+will be applied to the zgn_opengl_component which has this
+zgn_opengl_shader_program.

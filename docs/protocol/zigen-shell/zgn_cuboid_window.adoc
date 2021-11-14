@@ -1,0 +1,100 @@
+= zgn_cuboid_window
+
+This interface defines a zgn_cuboid_window role which gives an axis-aligned
+bounding box(aligned to the axises of virtual-object-local coordinate system)
+to a virtual object. We call the AABB "Cuboid Window". The center of a cuboid
+window matches the origin of the virtual-object-local coordinate system. The
+compositor will manage model matrix of the virtual object and place the cuboid
+window in the global space. The axises of a virtual-object-local coordinate
+system can be unaligned to the axises of the global coordinate system, and in
+this case the cuboid window is a oriented bounding box in the global coordinate
+system.
+
+Clients can draw content of the virtual object with cuboid window role but only
+within the cuboid window. The behavior when clients draw some objects outside
+the cuboid window is undefined.
+
+When a ray intersects with a cuboid window, the ray is regarded as intersected
+with the associated virtual object.
+
+zgn_cuboid_window provides protocols for user interactions such as move and
+resize of the cuboid window in the global space.
+
+== ack_configure
+`request`
+
+When a configure event is received, if a client commits the virtual object in
+response to the configure event, then the client must make an ack_configure
+request sometime before the commit request, passing along the serial of the
+configure event.
+
+The compositor then understand that the client will draw objects in response to
+the configure event corresponding to the serial argument from the next commit.
+
+If the client receives multiple configure events before it can respond to one,
+it only has to ack the last configure event.
+
+A client is not require to commit immediately after sending an ack_configure
+request - it may event ack_configure several times before its next commit.
+
+A client may send multiple ack_configure requests before committing, but only
+the last request sent before a commit indicates which configure event the
+client really is responding to.
+
+|===
+|arg|description
+
+|serial
+|the serial from the configure event
+|===
+
+== configure
+`event`
+
+This configure event asks the client to resize its cuboid window.
+the half_size argument is a float vector of size 3, and each float value is
+greater than zero.
+
+Clients should arrange their virtual object for the new size, and then send an
+ack_configure request with the serial sent in this configure event at some
+point before committing the new virtual object.
+
+If the client receives multiple configure events before it can respond to one,
+it is free to discard all but the last event it received.
+
+|===
+|arg|description
+
+|serial
+|serial of the configure event
+
+|half size
+|The half size of the cuboid window (vec3)
+|===
+
+== move
+`request`
+
+Start an interactive, user-driven move of the virtual object.
+
+The request must be used in response to some sort of user action like a button
+press or key press. The passed serial is used to determine the type of
+interactive move.
+
+The server may ignore move requests depending on the state of the virtual
+object, or if the passed serial is no longer valid.
+
+If triggered, the virtual object will lose the focus of the device used for the
+move. It is up to the compositor to visually indicate that the move is taking
+place. The is no guarantee that the device focus will return when the move is
+completed.
+
+|===
+|arg|description
+
+|seat
+|the zgn_seat of the user event
+
+|serial
+|the serial of the user event
+|===

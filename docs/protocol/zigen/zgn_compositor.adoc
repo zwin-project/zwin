@@ -1,7 +1,8 @@
 = zgn_compositor
 
-zigen compositorにおいて最も基本なGlobal object.
+A compositor in zigen windowing system.
+This object is a singleton global.
 
 == create_virtual_object
 
-zgn_virtual_objectを作る.
+Ask the compositor to create a new virtual object.

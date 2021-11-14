@@ -1,0 +1,88 @@
+= zgn_opengl_component
+
+Graphic Pipeline へのひとまとまりの入力を表す interface.
+主に Virtual object に描画する内容に関する double-buffered state を更新する。
+vertex buffer と shader program が attach され、少なくとも一つ以上の vertex attribute
+を持っていて、set_count がされていないと object は render されない。
+
+== destroy
+`request`
+
+Destroy zgn_opengl_component. Objects attached to a zgn_opengl_component will
+not be destroyed unless otherwise stated in their interface protocols.
+
+== attach_vertex_buffer
+`request`
+
+Attach zgn_opengl_vertex_buffer object to a zgn_opengl_component.
+A zgn_opengl_component cannot have more than one vertex buffer, and if another
+vertex buffer has already attached, it will be replaced.
+
+The vertex buffer will not be detached event after the next
+zgn_virtual_object.commit unlike wl_surface.attach.
+
+Whether the vertex buffer is attached or not is double-buffered state.
+
+== attach_shader_program
+`request`
+
+Attach zgn_opengl_shader_program object to a zgn_opengl_component.
+A zgn_opengl_component cannot have more than one shader program, and if another
+shader program has already attached, it will be replaced.
+
+The shader program will not be detached event after the next
+zgn_virtual_object.commit unlike wl_surface.attach.
+
+Whether the shader program is attached or not is double-buffered state.
+
+== attach_texture
+`request`
+
+Attach zgn_opengl_texture object to a zgn_opengl_component.
+A zgn_opengl_component cannot have more than one texture, and if another
+texture has already attached, it will be replaced.
+
+The texture will not be detached event after the next
+zgn_virtual_object.commit unlike wl_surface.attach.
+
+Whether the texture is attached or not is double-buffered state.
+
+== add_vertex_attribute
+`request`
+
+Add vertex attribute information to a zgn_opengl_component.
+The vertex attributes a zgn_opengl_component has are double-buffered state.
+
+Please see the specification of OpenGL `glVertexAttribPointer` for more
+information.
+
+== clear_vertex_attribute
+`request`
+
+Clear the vertex attributes a zgn_opengl_component has.
+The vertex attributes a zgn_opengl_component has are double-buffered state.
+
+== set_topology
+`request`
+
+Set topology mode for rendering. The topology mode is double-buffered state.
+A compositor has a default value "lines".
+
+Please see the specification of OpenGL `glDrawArrays` or `glDrawElements` for more
+information.
+
+== set_min
+`request`
+
+Specifies the starting index in the enabled arrays.
+A compositor has a default value 0. This value is double-buffered state.
+
+// this value will also be used for glDrawRangeElements in the future.
+
+== set_count
+`request`
+
+Set the maximum array index to be rendered.
+A compositor has a default value 0. This value is double-buffered state.
+
+// this value will also be used for glDrawElements in the future.

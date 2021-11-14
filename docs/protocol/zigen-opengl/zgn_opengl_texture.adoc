@@ -1,0 +1,44 @@
+= zgn_opengl_texture
+
+== destroy
+`request`
+
+Destroy a zgn_opengl_texture object.
+The texture will be detached from any associated virtual objects first,
+then destroyed.
+
+== attach_2d
+`request`
+
+Set a buffer of a texture of 2d. The content of the buffer is double-buffered
+state.
+
+The initial contents of a texture are void; there is no content.
+zgn_opengl_texture.attach_2d assigns the given buffer as the pending buffer.
+zgn_virtual_object.commit makes the pending buffer the new texture to be used
+for the next rendering. After commit, there is no pending buffer until the next
+attach.
+// TODO: zgn_opengl_texture has only one pending buffer and attach_1d and
+// attach_3d requests in the future may set the pending buffer replacing the
+// buffer that has been attached with this request.
+
+// TODO: wl_buffer will be replaced with zgn_buffer
+Committing a pending buffer allows the compositor to read the content of the
+buffer. The compositor may access the content at any time after the
+zgn_virtual_object.commit request. When the compositor will not access the
+buffer any more, it will send the wl_buffer.release event.
+Only after receiving wl_buffer.release, the client may reuse the buffer. A
+wl_buffer that has been attached and then replaced by another attach instead of
+committed will not receive a release event, and is not used by the compositor.
+
+If a pending buffer has been committed to more than one
+zgn_opengl_texture, the delivery of wl_buffer.release events becomes undefined.
+A well behaved client should not attach a buffer to more than one texture.
+Instead, clients can attach a texture to more than one zgn_opengl_component.
+
+Destroying the wl_buffer after wl_buffer.release does not change the contents of
+the texture. Destroying the wl_buffer before wl_buffer.release is allowed as
+long as the underlying buffer storage isn't re-used (this can happen e.g. on
+client process termination). However, if the client destroys the wl_buffer
+before receiving the wl_buffer.release event and mutates the underlying buffer
+storage, the texture contents become undefined immediately.

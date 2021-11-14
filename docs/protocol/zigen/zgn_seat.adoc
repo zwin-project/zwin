@@ -1,0 +1,76 @@
+= zgn_seat
+
+A seat is a group of keyboard and ray. This object is published as a global
+during start up, or when such a device is hot plugged. A seat typically has
+a ray and maintains a keyboard focus and a ray focus
+
+== capability
+`enum`
+
+This is a bitmask of capabilities this seat has; if a member is set, then it is
+present on the seat.
+
+|===
+|entry|description
+
+|ray
+|the seat has ray devices
+
+|keyboard
+|the seat has keyboard devices
+|===
+
+== error
+`enum`
+
+|===
+|error|description
+
+|missing_capability
+|get_ray or get_keyboard called on seat without the matching capability.
+|===
+
+== capabilities
+`event`
+
+This is emitted whenever a seat gains or loses the ray or keyboard
+capabilities. The argument is a capability enum containing the
+complete set of capabilities this seat has.
+
+When the ray capability is added, a client may create a zgn_ray object
+using the zgn_seat.get_ray request. This object will receive ray events
+until the capability is removed in the future.
+
+When the ray capability is removed, a client should destroy the zgn_ray object
+associated with the seat where the capability was removed, using the
+zgn_ray.release request. No further ray events will be received on
+these objects even if the seat regains the ray capability.
+
+The above behavior also applies to zgn_keyboard with the keyboard capability.
+
+== get_ray
+`request`
+
+The ID provided will be initialized to the zgn_ray interface for this seat.
+
+This request only takes effect if the seat has the ray capability, or has had
+the ray capability in the past. It is a protocol violation to issue this
+request on a seat that has never had the ray capability. The missing_capability
+error will be sent in this case.
+
+== get_keyboard
+`request`
+
+The ID provided will be initialized to the zgn_keyboard interface for this
+seat.
+
+This request only takes effect if ths seat has the keyboard capability, or has
+had the keyboard in the past. It is a protocol violation to issue this
+request on a seat that has never had the keyboard capability. The
+missing_capability error will be sent in this case.
+
+== release
+`request`
+
+Using this request, a client can tell the server that it is not going to
+use the seat object anymore.
