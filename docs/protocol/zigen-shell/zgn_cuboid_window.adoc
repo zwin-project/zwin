@@ -1,12 +1,12 @@
 = zgn_cuboid_window
 
 This interface defines a zgn_cuboid_window role which gives an axis-aligned
-bounding box(aligned to the axises of virtual-object-local coordinate system)
+bounding box(aligned to the axes of the virtual-object-local coordinate system)
 to a virtual object. We call the AABB "Cuboid Window". The center of a cuboid
 window matches the origin of the virtual-object-local coordinate system. The
 compositor will manage model matrix of the virtual object and place the cuboid
-window in the global space. The axises of a virtual-object-local coordinate
-system can be unaligned to the axises of the global coordinate system, and in
+window in the global space. The axes of a virtual-object-local coordinate
+system can be unaligned to the axes of the global coordinate system, and in
 this case the cuboid window is a oriented bounding box in the global coordinate
 system.
 
@@ -34,8 +34,8 @@ the configure event corresponding to the serial argument from the next commit.
 If the client receives multiple configure events before it can respond to one,
 it only has to ack the last configure event.
 
-A client is not require to commit immediately after sending an ack_configure
-request - it may event ack_configure several times before its next commit.
+A client is not required to commit immediately after sending an ack_configure
+request - it may even ack_configure several times before its next commit.
 
 A client may send multiple ack_configure requests before committing, but only
 the last request sent before a commit indicates which configure event the

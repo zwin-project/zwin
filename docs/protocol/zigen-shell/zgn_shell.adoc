@@ -1,10 +1,10 @@
 = zgn_shell
 
 The zgn_shell interface is exposed as a global object enabling clients to turn
-their zgn_virtual_objects into cuboid windows. It defines basic functionality
-needed for clients and the compositor to create cuboid windows that can be
-dragged, resized, rotated, etc, as well as transient cuboid windows such as
-preview objects during drag & drop action.
+their zgn_virtual_objects into cuboid windows. It defines the basic
+functionality needed for clients and the compositor to create cuboid windows
+that can be dragged, resized, rotated, etc, as well as transient cuboid windows
+such as preview objects during drag & drop action.
 
 == error
 `enum`
@@ -34,7 +34,7 @@ zgn_shell.defunct_virtual_object error.
 == get_cuboid_window
 `request`
 
-This creates an zgn_cuboid_window object for the given zgn_virtual_object and
+This creates a zgn_cuboid_window object for the given zgn_virtual_object and
 gives the cuboid window role to the virtual object.
 
 The compositor uses the half_size argument as a hint of the size of a new cuboid
@@ -42,7 +42,7 @@ window. The client should not rely on the compositor to obey the value. The
 compositor may decide to ignore the value.
 
 The half_size argument should be a float array of size 3, and each float value
-should be greater then zero. Otherwise, the request will be
+should be greater than zero. Otherwise, the request will be an
 invalid_cuboid_window_size error.
 
 |===
