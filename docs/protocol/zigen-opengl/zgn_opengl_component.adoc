@@ -16,9 +16,9 @@ not be destroyed unless otherwise stated in their interface protocols.
 
 Attach zgn_opengl_vertex_buffer object to a zgn_opengl_component.
 A zgn_opengl_component cannot have more than one vertex buffer, and if another
-vertex buffer has already attached, it will be replaced.
+vertex buffer has already beed attached, it will be replaced.
 
-The vertex buffer will not be detached event after the next
+The vertex buffer will not be detached after the next
 zgn_virtual_object.commit unlike wl_surface.attach.
 
 Whether the vertex buffer is attached or not is double-buffered state.
@@ -30,7 +30,7 @@ Attach zgn_opengl_shader_program object to a zgn_opengl_component.
 A zgn_opengl_component cannot have more than one shader program, and if another
 shader program has already attached, it will be replaced.
 
-The shader program will not be detached event after the next
+The shader program will not be detached after the next
 zgn_virtual_object.commit unlike wl_surface.attach.
 
 Whether the shader program is attached or not is double-buffered state.
@@ -40,9 +40,9 @@ Whether the shader program is attached or not is double-buffered state.
 
 Attach zgn_opengl_texture object to a zgn_opengl_component.
 A zgn_opengl_component cannot have more than one texture, and if another
-texture has already attached, it will be replaced.
+texture has already been attached, it will be replaced.
 
-The texture will not be detached event after the next
+The texture will not be detached after the next
 zgn_virtual_object.commit unlike wl_surface.attach.
 
 Whether the texture is attached or not is double-buffered state.
@@ -66,7 +66,7 @@ The vertex attributes a zgn_opengl_component has are double-buffered state.
 `request`
 
 Set topology mode for rendering. The topology mode is double-buffered state.
-A compositor has a default value "lines".
+A compositor has a default value "GL_LINES".
 
 Please see the specification of OpenGL `glDrawArrays` or `glDrawElements` for more
 information.

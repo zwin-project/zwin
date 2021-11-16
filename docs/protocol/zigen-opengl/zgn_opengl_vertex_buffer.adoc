@@ -30,13 +30,13 @@ committed will not receive a release event, and is not used by the compositor.
 
 If a pending buffer has been committed to more than one
 zgn_opengl_vertex_buffer, the delivery of wl_buffer.release events becomes
-undefined. A well behaved client should not attach a buffer to more than one
+undefined. A well-behaved client should not attach a buffer to more than one
 vertex buffer. Instead, clients can attach a vertex buffer to more than one
 zgn_opengl_component.
 
 Destroying the wl_buffer after wl_buffer.release does not change the contents
 of the vertex buffer. Destroying the wl_buffer before wl_buffer.release
-is allowed as long as the underlying buffer storage isn't re-used (this can
+is allowed as long as the underlying buffer storage isn't reused (this can
 happen e.g. on client process termination). However, if the client destroys the
 wl_buffer before receiving the wl_buffer.release event and mutates the
 underlying buffer storage, the contents of the vertex buffer become undefined

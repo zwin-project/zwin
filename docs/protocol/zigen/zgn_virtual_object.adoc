@@ -20,7 +20,7 @@ Virtual object roles are given by requests in other interfaces. The request
 should explicitly mention that the request gives a role to a
 zgn_virtual_object. Often, this request also creates new protocol object that
 represents the role and add additional functionality or restriction to
-zgn_virtual_object and the way to draw its content. When a client wants to
+zgn_virtual_object, e.g., the way to draw its content. When a client wants to
 destroy a zgn_virtual_object, they must destroy this 'role object' before the
 zgn_virtual_object.
 

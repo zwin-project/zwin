@@ -1,18 +1,18 @@
 = zgn_opengl
 
 The zgn_opengl interface is exposed as a global object enabling clients to draw
-contents of virtual objects using OpenGL like APIs.
+contents of virtual objects using OpenGL-like APIs.
 
 == vertex_attribute_type
 `enum`
 
-Please refer the specification of OpenGL `glVertexAttribPointer` (type param)
+Please refer to the specification of OpenGL `glVertexAttribPointer` (type param)
 for details.
 
 == topology
 `enum`
 
-Please refer the specification of OpenGL `glDrawArrays` (mode param) for
+Please refer to the specification of OpenGL `glDrawArrays` (mode param) for
 details.
 
 == destroy

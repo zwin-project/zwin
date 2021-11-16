@@ -34,7 +34,7 @@
       <entry name="triangles" value="8"/>
       <entry name="triangle_strip_adjacency" value="9"/>
       <entry name="triangles_adjacency" value="10"/>
-      <!-- <entry name="patches" value="11"/> -->
+      <!-- <entry name="patches" value="11"/> reserved -->
     </enum>
 
     <request name="destroy" type="destructor">

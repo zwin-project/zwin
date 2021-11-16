@@ -1,6 +1,6 @@
 = zgn_opengl_shader_program
 
-This is a interface to create and build shader programs.
+This is an interface to create and build shader programs.
 
 A zgn_opengl_shader_program which has not been called
 zgn_opengl_shader_program.link is useless. Clients need to call
