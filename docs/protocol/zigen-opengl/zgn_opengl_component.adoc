@@ -16,7 +16,7 @@ not be destroyed unless otherwise stated in their interface protocols.
 
 Attach zgn_opengl_vertex_buffer object to a zgn_opengl_component.
 A zgn_opengl_component cannot have more than one vertex buffer, and if another
-vertex buffer has already beed attached, it will be replaced.
+vertex buffer has already been attached, it will be replaced.
 
 The vertex buffer will not be detached after the next
 zgn_virtual_object.commit unlike wl_surface.attach.
