@@ -8,6 +8,8 @@ project(
 
 src_inc = include_directories('src')
 
+pkgconfig = import('pkgconfig')
+
 subdir('protocol')
 subdir('src')
 subdir('tests')
