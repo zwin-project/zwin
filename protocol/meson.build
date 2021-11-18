@@ -8,3 +8,14 @@ zigen_opengl_xml_abs_path = join_paths(meson.current_source_dir(), 'zigen-opengl
 install_data(zigen_xml)
 install_data(zigen_shell_xml)
 install_data(zigen_opengl_xml)
+
+pkgconfig.generate(
+  name: 'Zigen Protocols',
+  description: 'Zigen protocol files',
+  version: meson.project_version(),
+  variables: [
+    'datarootdir=' + join_paths('${prefix}', get_option('datadir')),
+    'pkgdatadir=' + join_paths('${datarootdir}', 'zigen-protocols'),
+  ],
+  filebase: 'zigen-protocols',
+)
