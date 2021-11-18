@@ -7,7 +7,7 @@
 
     <request name="create_virtual_object">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_compositor.adoc#create_virtual_object"/>
-      <arg name="id" type="new_id" interface="zigen_virtual_object"/>
+      <arg name="id" type="new_id" interface="zgn_virtual_object"/>
     </request>
   </interface>
 

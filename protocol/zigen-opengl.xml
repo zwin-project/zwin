@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocol name="zigen-opengl">
+<protocol name="zigen_opengl">
   <copyright>Apache-2.0</copyright>
   <interface name="zgn_opengl" version="1">
     <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl.adoc"/>
@@ -49,7 +49,7 @@
 
     <request name="create_vertex_buffer">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl.adoc#create_vertex_buffer"/>
-      <arg name="id" type="new_id" interface="zgn_oepngl_vertex_buffer"/>
+      <arg name="id" type="new_id" interface="zgn_opengl_vertex_buffer"/>
     </request>
 
     <request name="create_shader_program">

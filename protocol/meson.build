@@ -15,7 +15,7 @@ pkgconfig.generate(
   version: meson.project_version(),
   variables: [
     'datarootdir=' + join_paths('${prefix}', get_option('datadir')),
-    'pkgdatadir=' + join_paths('${datarootdir}', 'zigen-protocols'),
+    'pkgdatadir=' + join_paths('${datarootdir}', meson.project_name()),
   ],
   filebase: 'zigen-protocols',
 )
