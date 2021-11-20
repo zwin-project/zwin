@@ -21,6 +21,11 @@
     <request name="commit">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_virtual_object.adoc#commit"/>
     </request>
+
+    <request name="frame">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_virtual_object.adoc#frame"/>
+      <arg name="callback" type="new_id" interface="wl_callback"/>
+    </request>
   </interface>
 
   <interface name="zgn_seat" version="1">
