@@ -23,6 +23,10 @@ zgn_virtual_object.commit unlike wl_surface.attach.
 
 Whether the vertex buffer is attached or not is double-buffered state.
 
+When the attached vertex buffer is destroyed, the vertex buffer will be
+detached immediately, so a well-behaved client should attach a new vertex buffer
+and commit the state before destroying the vertex buffer.
+
 == attach_shader_program
 `request`
 
@@ -35,6 +39,10 @@ zgn_virtual_object.commit unlike wl_surface.attach.
 
 Whether the shader program is attached or not is double-buffered state.
 
+When the attached shader program is destroyed, the shader program will be
+detached immediately, so a well-behaved client should attach a new shader
+program and commit the state before destroying the shader program.
+
 == attach_texture
 `request`
 
@@ -46,6 +54,10 @@ The texture will not be detached after the next
 zgn_virtual_object.commit unlike wl_surface.attach.
 
 Whether the texture is attached or not is double-buffered state.
+
+When the attached texture is destroyed, the texture will be detached
+immediately, so a well-behaved client should attach a new texture and commit the
+state before destroying the texture.
 
 == add_vertex_attribute
 `request`

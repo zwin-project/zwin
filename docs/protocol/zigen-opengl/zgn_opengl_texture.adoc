@@ -4,8 +4,6 @@
 `request`
 
 Destroy a zgn_opengl_texture object.
-The texture will be detached from any associated virtual objects first,
-then destroyed.
 
 == attach_2d
 `request`

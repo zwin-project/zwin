@@ -21,6 +21,8 @@ details.
 Using this request a client can tell the server that it is not going to use the
 zgn_opengl object anymore.
 
+Objects created from the zgn_opengl (texture, vertex buffer, etc.) will not be destroyed.
+
 == create_opengl_component
 `request`
 
