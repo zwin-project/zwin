@@ -27,6 +27,10 @@
   <interface name="zgn_cuboid_window" version="1">
     <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_cuboid_window.adoc"/>
 
+    <request name="destroy" type="destructor">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_cuboid_window.adoc#destroy"/>
+    </request>
+
     <request name="ack_configure">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_cuboid_window.adoc#ack_configure"/>
       <arg name="serial" type="uint"/>
