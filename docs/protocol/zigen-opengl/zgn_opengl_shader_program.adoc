@@ -24,8 +24,6 @@ to use the shader programs for the rendering in the commit.
 `request`
 
 Destroy a zgn_opengl_shader_program object.
-The shader program will be detached from any associated virtual objects first,
-then destroyed.
 
 == set_vertex_shader
 `request`

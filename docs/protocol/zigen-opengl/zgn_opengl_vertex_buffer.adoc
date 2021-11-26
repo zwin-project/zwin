@@ -4,8 +4,6 @@
 `request`
 
 Destroy a zgn_opengl_vertex_buffer object.
-The vertex buffer will be detached from any associated virtual objects first,
-then destroyed.
 
 == attach
 `request`

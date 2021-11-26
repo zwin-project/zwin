@@ -20,6 +20,11 @@ with the associated virtual object.
 zgn_cuboid_window provides protocols for user interactions such as move and
 resize of the cuboid window in the global space.
 
+== destroy
+`request`
+
+Delete the cuboid window and invalidates its object ID.
+
 == ack_configure
 `request`
 
