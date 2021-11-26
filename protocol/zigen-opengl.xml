@@ -126,7 +126,6 @@
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_vertex_buffer.adoc#attach"/>
       <!-- TODO: replace with a simpler buffer interface: zgn_buffer -->
       <arg name="buffer" type="object" interface="wl_buffer"/>
-      <arg name="size" type="uint"/>
     </request>
   </interface>
 
@@ -169,11 +168,7 @@
 
     <request name="attach_2d">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_texture.adoc#set_image_2d"/>
-      <!-- TODO: replace with a simpler buffer interface: zgn_buffer -->
       <arg name="buffer" type="object" interface="wl_buffer"/>
-      <arg name="format" type="uint" enum="wl_shm.format"/>
-      <arg name="width" type="uint"/>
-      <arg name="height" type="uint"/>
     </request>
   </interface>
 </protocol>
