@@ -136,6 +136,7 @@
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_shader_program.adoc#error"/>
       <entry name="compilation_error" value="0"/>
       <entry name="linkage_error" value="1"/>
+      <entry name="immutable_error" value="2"/>
     </enum>
 
     <request name="destroy" type="destructor">

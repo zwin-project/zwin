@@ -7,6 +7,10 @@ zgn_opengl_shader_program.link is useless. Clients need to call
 zgn_opengl_shader_program.link before the zgn_virtual_object.commit
 to use the shader programs for the rendering in the commit.
 
+The shader program is immutable, and once zgn_opengl_shader_program.link is
+called, client cannot change the contents of the
+zgn_opengl_shader_program object.
+
 == error
 `enum`
 
@@ -18,6 +22,9 @@ to use the shader programs for the rendering in the commit.
 
 |linkage_error
 |failed to link program objects
+
+|immutable_error
+|clients tried to change the content of shader program which has already been linked.
 |===
 
 == destroy
@@ -34,8 +41,6 @@ immediately, and if the compilation fails, the request raises compilation_error.
 Clients need to call zgn_opengl_shader_program.link after this request to apply
 the changes.
 
-The contents of vertex buffer are double-buffered state.
-
 == set_fragment_shader
 `request`
 
@@ -46,14 +51,11 @@ compilation_error.
 Clients need to call zgn_opengl_shader_program.link after this request to apply
 the changes.
 
-The contents of fragment buffer are double-buffered state.
-
 == link
 `request`
 
 This request links the shader programs set to a zgn_opengl_shader_program before
 this request. If it fails to link, this request raises linkage_error.
 
-From the next zgn_virtual_object.commit, the changes to the shader programs
-will be applied to the zgn_opengl_component which has this
-zgn_opengl_shader_program.
+Once a client calls this request, the client must not call set_vertex_shader,
+set_fragment_shader and link request.
