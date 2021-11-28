@@ -9,6 +9,8 @@ contents of virtual objects using OpenGL-like APIs.
 Please refer to the specification of OpenGL `glVertexAttribPointer` (type param)
 for details.
 
+The vertex_attribute_type codes match the macros defined in GL/glew.h
+
 == topology
 `enum`
 

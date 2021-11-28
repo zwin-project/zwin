@@ -6,19 +6,19 @@
 
     <enum name="vertex_attribute_type">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl.adoc#vertex_attribute_type"/>
-      <entry name="byte" value="0"/>
-      <entry name="unsigned_byte" value="1"/>
-      <entry name="short" value="2"/>
-      <entry name="unsigned_short" value="3"/>
-      <entry name="int" value="4"/>
-      <entry name="unsigned_int" value="5"/>
-      <entry name="half_float" value="6"/>
-      <entry name="float" value="7"/>
-      <entry name="double" value="8"/>
-      <entry name="fixed" value="9"/>
-      <entry name="int_2_10_10_10_rev" value="10"/>
-      <entry name="unsigned_int_2_10_10_10_rev" value="11"/>
-      <entry name="unsigned_int_10f_11f_11f_rev" value="12"/>
+      <entry name="byte" value="0x1400"/>
+      <entry name="unsigned_byte" value="0x1401"/>
+      <entry name="short" value="0x1402"/>
+      <entry name="unsigned_short" value="0x1403"/>
+      <entry name="int" value="0x1404"/>
+      <entry name="unsigned_int" value="0x1405"/>
+      <entry name="float" value="0x1406"/>
+      <entry name="double" value="0x140A"/>
+      <entry name="half_float" value="0x140B"/>
+      <entry name="fixed" value="0x140C"/>
+      <entry name="unsigned_int_2_10_10_10_rev" value="0x8368"/>
+      <entry name="unsigned_int_10f_11f_11f_rev" value="0x8C3B"/>
+      <entry name="int_2_10_10_10_rev" value="0x8D9F"/>
     </enum>
 
     <enum name="topology">
