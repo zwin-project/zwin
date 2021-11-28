@@ -24,17 +24,16 @@
     <enum name="topology">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl.adoc#topology"/>
       <entry name="points" value="0"/>
-      <entry name="line_strip" value="1"/>
+      <entry name="lines" value="1"/>
       <entry name="line_loop" value="2"/>
-      <entry name="lines" value="3"/>
-      <entry name="line_strip_adjacency" value="4"/>
-      <entry name="lines_adjacency" value="5"/>
-      <entry name="triangle_strip" value="6"/>
-      <entry name="triangle_fan" value="7"/>
-      <entry name="triangles" value="8"/>
-      <entry name="triangle_strip_adjacency" value="9"/>
-      <entry name="triangles_adjacency" value="10"/>
-      <!-- <entry name="patches" value="11"/> reserved -->
+      <entry name="line_strip" value="3"/>
+      <entry name="triangles" value="4"/>
+      <entry name="triangle_strip" value="5"/>
+      <entry name="triangle_fan" value="6"/>
+      <entry name="lines_adjacency" value="0x000A"/>
+      <entry name="line_strip_adjacency" value="0x000B"/>
+      <entry name="triangles_adjacency" value="0x000C"/>
+      <entry name="triangle_strip_adjacency" value="0x000D"/>
     </enum>
 
     <request name="destroy" type="destructor">

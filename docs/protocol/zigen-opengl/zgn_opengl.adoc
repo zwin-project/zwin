@@ -12,8 +12,7 @@ for details.
 == topology
 `enum`
 
-Please refer to the specification of OpenGL `glDrawArrays` (mode param) for
-details.
+The topology codes match the macros defined in GL/glew.h
 
 == destroy
 `request`
