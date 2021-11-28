@@ -16,7 +16,7 @@ such as preview objects during drag & drop action.
 |given virtual object has another role
 
 |defunct_virtual_object
-|xgn_shell was destroyed before children
+|zgn_shell was destroyed before children
 
 |invalid_cuboid_window_size
 |given cuboid window size is invalid
@@ -27,9 +27,9 @@ such as preview objects during drag & drop action.
 
 Destroy this zgn_shell object.
 
-Destroying a bound zgn_shell object while there are surfaces still alive
-created by this zgn_shell object instance is illegal and will result in
-zgn_shell.defunct_virtual_object error.
+Destroying a bound zgn_shell object while there are virtual object role objects
+still alive created by this zgn_shell object instance is illegal and will result
+in zgn_shell.defunct_virtual_object error.
 
 == get_cuboid_window
 `request`

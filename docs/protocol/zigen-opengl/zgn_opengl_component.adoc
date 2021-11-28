@@ -5,6 +5,9 @@ Graphic Pipeline へのひとまとまりの入力を表す interface.
 vertex buffer と shader program が attach され、少なくとも一つ以上の vertex attribute
 を持っていて、set_count がされていないと object は render されない。
 
+When clients want to destroy a virtual object, they must destroy the
+bound zgn_opengl_component before the virtual object.
+
 == destroy
 `request`
 
@@ -18,8 +21,9 @@ Attach zgn_opengl_vertex_buffer object to a zgn_opengl_component.
 A zgn_opengl_component cannot have more than one vertex buffer, and if another
 vertex buffer has already been attached, it will be replaced.
 
-The vertex buffer will not be detached after the next
-zgn_virtual_object.commit unlike wl_surface.attach.
+When a client modifies the content of the vertex buffer currently attached,
+the client also has to attach the vertex buffer to the zgn_opengl_component
+again to notify the update.
 
 Whether the vertex buffer is attached or not is double-buffered state.
 
@@ -34,9 +38,6 @@ Attach zgn_opengl_shader_program object to a zgn_opengl_component.
 A zgn_opengl_component cannot have more than one shader program, and if another
 shader program has already attached, it will be replaced.
 
-The shader program will not be detached after the next
-zgn_virtual_object.commit unlike wl_surface.attach.
-
 Whether the shader program is attached or not is double-buffered state.
 
 When the attached shader program is destroyed, the shader program will be
@@ -50,8 +51,9 @@ Attach zgn_opengl_texture object to a zgn_opengl_component.
 A zgn_opengl_component cannot have more than one texture, and if another
 texture has already been attached, it will be replaced.
 
-The texture will not be detached after the next
-zgn_virtual_object.commit unlike wl_surface.attach.
+When a client modifies the content of the texture currently attached, the
+client also has to attach the texture to the zgn_opengl_component again to
+notify the update.
 
 Whether the texture is attached or not is double-buffered state.
 
