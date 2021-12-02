@@ -64,7 +64,11 @@ state before destroying the texture.
 == add_vertex_attribute
 `request`
 
-Add vertex attribute information to a zgn_opengl_component.
+Add vertex attribute information to a zgn_opengl_component's pending state.
+Clients can add multiple vertex attributes to the pending state, and these
+attributes will be applied atomically when committed. After the commit, the
+pending state regarding vertex attributes will be cleared.
+
 The vertex attributes a zgn_opengl_component has are double-buffered state.
 
 Please see the specification of OpenGL `glVertexAttribPointer` for more
