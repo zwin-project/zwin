@@ -22,14 +22,37 @@ A zgn_opengl_component cannot have more than one vertex buffer, and if another
 vertex buffer has already been attached, it will be replaced.
 
 When a client modifies the content of the vertex buffer currently attached,
-the client also has to attach the vertex buffer to the zgn_opengl_component
-again to notify the update.
+the client has to attach the vertex buffer to the zgn_opengl_component again to
+notify the update.
 
 Whether the vertex buffer is attached or not is double-buffered state.
 
 When the attached vertex buffer is destroyed, the vertex buffer will be
 detached immediately, so a well-behaved client should attach a new vertex buffer
 and commit the state before destroying the vertex buffer.
+
+== attach_element_array_buffer
+`request`
+
+Attach zgn_opengl_element_array_buffer object to a zgn_opengl_component.
+A zgn_opengl_component cannot have more than one element array buffer, and if
+another element array buffer has already been attached, it will be replaced.
+
+When a zgn_opengl_component has a element array buffer attached, a compositor
+constructs a sequence of primitives with the content of the element array
+buffer using, e.g. glDrawElements.
+If not, a compositor uses attached vertex buffer directly
+using, e.g. glDrawArrays.
+
+When a client modifies the content of the element array buffer currently
+attached, the client has to attach the element array buffer to the
+zgn_opengl_component again to notify the update.
+
+Whether the element array buffer is attached or not is double-buffered state.
+
+When the attached element array buffer is destroyed, the element array buffer
+will be detached immediately, so a well-behaved client should attach a new
+element array buffer and commit the state before destroying the old buffer.
 
 == attach_shader_program
 `request`
@@ -52,8 +75,8 @@ A zgn_opengl_component cannot have more than one texture, and if another
 texture has already been attached, it will be replaced.
 
 When a client modifies the content of the texture currently attached, the
-client also has to attach the texture to the zgn_opengl_component again to
-notify the update.
+client has to attach the texture to the zgn_opengl_component again to notify
+the update.
 
 Whether the texture is attached or not is double-buffered state.
 
@@ -93,6 +116,10 @@ information.
 `request`
 
 Specifies the starting index in the enabled arrays.
+
+When clients use this request with an element array buffer, this specifies the
+staring point of the element array buffer in byte.
+
 A compositor has a default value 0. This value is double-buffered state.
 
 // this value will also be used for glDrawRangeElements in the future.
@@ -100,7 +127,7 @@ A compositor has a default value 0. This value is double-buffered state.
 == set_count
 `request`
 
-Set the maximum array index to be rendered.
+Specify the number of elements to be rendered.
 A compositor has a default value 0. This value is double-buffered state.
 
 // this value will also be used for glDrawElements in the future.

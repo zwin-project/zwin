@@ -11,6 +11,14 @@ for details.
 
 The vertex_attribute_type codes match the macros defined in GL/glew.h
 
+== element_array_indices_type
+`enum`
+
+Please refer to the specification of OpenGL `glDrawElements` (type param)
+for details.
+
+The element_array_indices_type codes match the macros defined in GL/glew.h
+
 == topology
 `enum`
 
@@ -33,6 +41,11 @@ Ask the compositor to create a new zgn_opengl_component object.
 `request`
 
 Ask the compositor to create a new zgn_opengl_vertex_buffer object.
+
+== create_element_array_buffer
+`request`
+
+Ask the compositor to create a new zgn_opengl_element_array_buffer object.
 
 == create_shader_program
 `request`

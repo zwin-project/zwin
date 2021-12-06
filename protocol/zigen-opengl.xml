@@ -21,6 +21,13 @@
       <entry name="int_2_10_10_10_rev" value="0x8D9F"/>
     </enum>
 
+    <enum name="element_array_indices_type">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl.adoc#vertex_attribute_type"/>
+      <entry name="unsigned_byte" value="0x1401"/>
+      <entry name="unsigned_short" value="0x1403"/>
+      <entry name="unsigned_int" value="0x1405"/>
+    </enum>
+
     <enum name="topology">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl.adoc#topology"/>
       <entry name="points" value="0"/>
@@ -51,6 +58,11 @@
       <arg name="id" type="new_id" interface="zgn_opengl_vertex_buffer"/>
     </request>
 
+    <request name="create_element_array_buffer">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl.adoc#create_element_array_buffer"/>
+      <arg name="id" type="new_id" interface="zgn_opengl_element_array_buffer"/>
+    </request>
+
     <request name="create_shader_program">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl.adoc#create_shader_program"/>
       <arg name="id" type="new_id" interface="zgn_opengl_shader_program"/>
@@ -71,17 +83,22 @@
 
     <request name="attach_vertex_buffer">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_component.adoc#attach_vertex_buffer"/>
-      <arg name="vertex_buffer" type="object" interface="zgn_opengl_vertex_buffer" allow-null="true"/>
+      <arg name="vertex_buffer" type="object" interface="zgn_opengl_vertex_buffer"/>
+    </request>
+
+    <request name="attach_element_array_buffer">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_component.adoc#attach_element_array_buffer"/>
+      <arg name="element_array_buffer" type="object" interface="zgn_opengl_element_array_buffer"/>
     </request>
 
     <request name="attach_shader_program">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_component.adoc#attach_shader_program"/>
-      <arg name="shader_program" type="object" interface="zgn_opengl_shader_program" allow-null="true"/>
+      <arg name="shader_program" type="object" interface="zgn_opengl_shader_program"/>
     </request>
 
     <request name="attach_texture">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_component.adoc#attach_texture"/>
-      <arg name="texture" type="object" interface="zgn_opengl_texture" allow-null="true"/>
+      <arg name="texture" type="object" interface="zgn_opengl_texture"/>
     </request>
 
     <request name="add_vertex_attribute">
@@ -125,6 +142,21 @@
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_vertex_buffer.adoc#attach"/>
       <!-- TODO: replace with a simpler buffer interface: zgn_buffer -->
       <arg name="buffer" type="object" interface="wl_buffer"/>
+    </request>
+  </interface>
+
+  <interface name="zgn_opengl_element_array_buffer" version="1">
+    <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_element_array_buffer.adoc"/>
+
+    <request name="destroy" type="destructor">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_element_array_buffer.adoc#destroy"/>
+    </request>
+
+    <request name="attach">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_element_array_buffer.adoc#attach"/>
+      <!-- TODO: replace with a simpler buffer interface: zgn_buffer -->
+      <arg name="buffer" type="object" interface="wl_buffer"/>
+      <arg name="type" type="uint" enum="zgn_opengl.element_array_indices_type"/>
     </request>
   </interface>
 
