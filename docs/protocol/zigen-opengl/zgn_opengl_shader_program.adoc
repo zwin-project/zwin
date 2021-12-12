@@ -25,12 +25,29 @@ zgn_opengl_shader_program object.
 
 |immutable_error
 |clients tried to change the content of shader program which has already been linked.
+
+|invalid_uniform_variable
+|clients tried to set uniform variables with invalid vector / matrix size
 |===
 
 == destroy
 `request`
 
 Destroy a zgn_opengl_shader_program object.
+
+== set_uniform_float_vector
+`request`
+
+Specify the value of a uniform variable for the program object.
+
+`size` parameter must be 1, 2, 3 or 4.
+
+== set_uniform_float_matrix
+`request`
+
+Specify the value of a uniform variable for the program object.
+
+`col` and `row` parameter must be 2, 3 or 4.
 
 == set_vertex_shader
 `request`

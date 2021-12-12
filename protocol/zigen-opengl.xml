@@ -168,10 +168,29 @@
       <entry name="compilation_error" value="0"/>
       <entry name="linkage_error" value="1"/>
       <entry name="immutable_error" value="2"/>
+      <entry name="invalid_uniform_variable" value="3"/>
     </enum>
 
     <request name="destroy" type="destructor">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_shader_program.adoc#destroy"/>
+    </request>
+
+    <request name="set_uniform_float_vector">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_shader_program.adoc#set_uniform_float_vector"/>
+      <arg name="location" type="string"/>
+      <arg name="size" type="uint"/>
+      <arg name="count" type="uint"/>
+      <arg name="value" type="array"/>
+    </request>
+
+    <request name="set_uniform_float_matrix">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-opengl/zgn_opengl_shader_program.adoc#set_uniform_float_matrix"/>
+      <arg name="location" type="string"/>
+      <arg name="col" type="uint"/>
+      <arg name="row" type="uint"/>
+      <arg name="transpose" type="uint"/>
+      <arg name="count" type="uint"/>
+      <arg name="value" type="array"/>
     </request>
 
     <request name="set_vertex_shader">
