@@ -24,7 +24,7 @@ Create a new data device for a given seat.
 |arg|description
 
 |id
-|data source to create
+|data device to create
 
 |seat
 |seat associated with the data device

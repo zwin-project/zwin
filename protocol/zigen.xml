@@ -25,7 +25,7 @@
     <request name="accept">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_offer.adoc#accept"/>
       <arg name="serial" type="uint"/>
-      <arg name="mime_type" type="string"/>
+      <arg name="mime_type" type="string" allow-null="true"/>
     </request>
 
     <request name="receive">
@@ -40,7 +40,7 @@
 
     <event name="offer">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_offer.adoc#offer"/>
-      <arg name="mime_type" type="string" summary="offered mime type"/>
+      <arg name="mime_type" type="string"/>
     </event>
 
     <request name="finish">
@@ -132,23 +132,18 @@
       <arg name="serial" type="uint"/>
     </request>
 
-    <request name="set_selection">
-      <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#set_selection"/>
-      <arg name="source" type="object" interface="zgn_data_source" allow-null="true"/>
-      <arg name="serial" type="uint"/>
-    </request>
-
     <event name="data_offer">
       <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#data_offer"/>
       <arg name="id" type="new_id" interface="zgn_data_offer"/>
+      <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
     </event>
 
     <event name="enter">
       <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#enter"/>
       <arg name="serial" type="uint"/>
       <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
-      <arg name="x" type="fixed"/>
-      <arg name="y" type="fixed"/>
+      <arg name="origin" type="array" summary="vec3"/>
+      <arg name="direction" type="array" summary="vec3"/>
       <arg name="id" type="object" interface="zgn_data_offer" allow-null="true"/>
     </event>
 
@@ -159,17 +154,12 @@
     <event name="motion">
       <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#motion"/>
       <arg name="time" type="uint"/>
-      <arg name="x" type="fixed"/>
-      <arg name="y" type="fixed"/>
+      <arg name="origin" type="array" summary="vec3"/>
+      <arg name="direction" type="array" summary="vec3"/>
     </event>
 
     <event name="drop">
       <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#drop"/>
-    </event>
-
-    <event name="selection">
-      <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#selection"/>
-      <arg name="id" type="object" interface="zgn_data_offer" allow-null="true"/>
     </event>
 
     <request name="release" type="destructor">
