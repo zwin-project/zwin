@@ -1,0 +1,66 @@
+= zgn_data_device_manager
+
+The zgn_data_device_manager is a singleton global object that provides access to inter-client data transfer mechanisms such as copy-and-paste and drag-and-drop.
+These mechanisms are tied to a zgn_seat and this interface lets a client get a zgn_data_device corresponding to a zgn_seat.
+
+== create_data_source
+`request`
+
+Create a new data source.
+
+|===
+|arg|description
+
+|id
+|data source to create
+|===
+
+== get_data_device
+`request`
+
+Create a new data device for a given seat.
+
+|===
+|arg|description
+
+|id
+|data source to create
+
+|seat
+|seat associated with the data device
+|===
+
+== dnd_action
+`enum`
+
+This is a bitmask of the available/preferred actions in a drag-and-drop operation.
+
+In the compositor, the selected action is a result of matching the actions offered by the source and destination sides.
+"action" events with a "none" action will be sent to both source and destination if there is no match.
+All further checks will effectively happen on (source actions ∩ destination actions).
+
+In addition, compositors may also pick different actions in reaction to key modifiers being pressed.
+One common design that is used in major toolkits (and the behavior recommended for compositors) is:
+
+- If no modifiers are pressed, the first match (in bit order) will be used.
+- Pressing Shift selects "move", if enabled in the mask.
+- Pressing Control selects "copy", if enabled in the mask.
+
+Behavior beyond that is considered implementation-dependent.
+Compositors may for example bind other modifiers (like Alt/Meta) or drags initiated with other buttons than BTN_LEFT to specific actions (e.g. "ask").
+
+|===
+|entry|description
+
+|none
+|no action
+
+|copy
+|copy action
+
+|move
+|move action
+
+|ask
+|ask action
+|===
