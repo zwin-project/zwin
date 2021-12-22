@@ -111,6 +111,18 @@ completed.
 |the serial of the user event
 |===
 
+== moved
+`event`
+
+Notify the client that the cuboid window has moved.
+
+|===
+|arg|description
+
+|face_direction
+|the direction to the user's head (vec3, normalized)
+|===
+
 == rotate
 `request`
 
