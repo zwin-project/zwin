@@ -1,14 +1,17 @@
 = zgn_cuboid_window
 
-This interface defines a zgn_cuboid_window role which gives an axis-aligned
-bounding box(aligned to the axes of the virtual-object-local coordinate system)
-to a virtual object. We call the AABB "Cuboid Window". The center of a cuboid
-window matches the origin of the virtual-object-local coordinate system. The
-compositor will manage model matrix of the virtual object and place the cuboid
-window in the global space. The axes of a virtual-object-local coordinate
-system can be unaligned to the axes of the global coordinate system, and in
-this case the cuboid window is a oriented bounding box in the global coordinate
-system.
+This interface defines a zgn_cuboid_window role which gives an oriented bounding
+box to a virtual object. We call the OBB "Cuboid Window". The center of a cuboid
+window matches the origin of its virtual-object-local coordinate system.
+The compositor manages model matrices of virtual objects and places cuboid
+windows in the global space. The model matrices of cuboid-window-role virtual
+objects do only translation, and any request which scale or rotate the model
+matrices does not exist.
+
+The cuboid window will be represented by `half_size` (vec3) and `quaternion`
+(vec4). Note that the center of the cuboid window matches the origin of its
+virtual-objet-local-coordinates. Therefore we can represent the OBB with these
+two parameters.
 
 Clients can draw content of the virtual object with cuboid window role but only
 within the cuboid window. The behavior when clients draw some objects outside
@@ -56,9 +59,10 @@ client really is responding to.
 == configure
 `event`
 
-This configure event asks the client to resize its cuboid window.
-the half_size argument is a float vector of size 3, and each float value is
+This configure event asks the client to resize and rotate its cuboid window.
+The half_size argument is a float vector of size 3, and each float value is
 greater than zero.
+The quaternion argument is a float vector of size 4, and it's normalized.
 
 Clients should arrange their virtual object for the new size, and then send an
 ack_configure request with the serial sent in this configure event at some
@@ -75,6 +79,9 @@ it is free to discard all but the last event it received.
 
 |half size
 |The half size of the cuboid window (vec3)
+
+|quaternion
+|The quaternion of the cuboid window (vec4) {{x, y, z}, w}
 |===
 
 == move
@@ -102,4 +109,18 @@ completed.
 
 |serial
 |the serial of the user event
+|===
+
+== rotate
+`request`
+
+Request compositor to set a new quaternion for the cuboid window.
+
+The compositor may ignore the request.
+
+|===
+|arg|description
+
+|quaternion
+|the quaternion (vec4) {{x, y, z}, w}
 |===
