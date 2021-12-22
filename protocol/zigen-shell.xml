@@ -50,6 +50,11 @@
       <arg name="serial" type="uint"/>
     </request>
 
+    <event name="moved">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_cuboid_window.adoc#moved"/>
+      <arg name="face_direction" type="array"/>
+    </event>
+
     <request name="rotate">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_cuboid_window.adoc#rotate"/>
       <arg name="quaternion" type="array"/>
