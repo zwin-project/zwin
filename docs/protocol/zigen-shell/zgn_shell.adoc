@@ -18,8 +18,8 @@ such as preview objects during drag & drop action.
 |defunct_virtual_object
 |zgn_shell was destroyed before children
 
-|invalid_cuboid_window_size
-|given cuboid window size is invalid
+|invalid_cuboid_window
+|given cuboid window parameter is invalid
 |===
 
 == destroy
@@ -40,6 +40,7 @@ gives the cuboid window role to the virtual object.
 The compositor uses the half_size argument as a hint of the size of a new cuboid
 window. The client should not rely on the compositor to obey the value. The
 compositor may decide to ignore the value.
+The same applies to the quaternion.
 
 The half_size argument should be a float array of size 3, and each float value
 should be greater than zero. Otherwise, the request will be an
@@ -56,4 +57,7 @@ invalid_cuboid_window_size error.
 
 |half_size
 |The half size of the cuboid window to create. This is just a hint. (vec3)
+
+|quaternion
+|The quaternion of the cuboid window to create. This is just a hint. (vec4) {{x, y, z}, w}
 |===
