@@ -24,17 +24,8 @@ If source is NULL, enter, leave and motion events are sent only to the client th
 If source is destroyed, the drag-and-drop session will be cancelled.
 
 The origin virtual object is the virtual object where the drag originates and the client must have an active implicit grab that matches the serial.
-// ??? 度々出てくるserialが何のためにあるか理解する
 
-The icon virtual object is an optional (can be NULL) virtual object that provides an icon to be moved around with the cursor.
-// rayにcursorという概念がないからどこに配置する？問題は発生してる
-Initially, the top-left corner of the icon virtual object is placed at the cursor hotspot, but subsequent wl_surface.attach request can move the relative position.
-Attach requests must be confirmed with wl_surface.commit as usual.
-// virtual object wl_data_deviceのfocusがあたっているmotionに応じてiconの位置移動させる?
-// TODO: 誰がiconの位置を移動させるか確認
-The icon virtual object is given the role of a drag-and-drop icon.
-If the icon virtual object already has another role, it raises a protocol error.
-// TODO: rayのどの位置にdrag-and-drop iconを描画するか？問題ある
+// FIXME: icon virtual object document
 
 |===
 |arg|description
