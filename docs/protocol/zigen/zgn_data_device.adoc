@@ -54,10 +54,6 @@ Immediately following the data_device.data_offer event, the new data_offer objec
 
 |id
 |the new data_offer object
-
-|virtual object
-|target virtual object
-// TODO
 |===
 
 == enter
