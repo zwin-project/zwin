@@ -1,0 +1,123 @@
+= zgn_data_device
+
+There is one zgn_data_device per seat which can be obtained from the global zgn_data_device_manager singleton.
+
+A zgn_data_device provides access to inter-client data transfer mechanisms such as copy-and-paste and drag-and-drop.
+
+== error
+`enum`
+
+|===
+|entry|description
+
+|role
+|given virtual object has another role
+|===
+
+== start_drag
+`request`
+
+This request asks the compositor to start a drag-and-drop operation on behalf of the client.
+
+The source argument is the data source that provides the data for the eventual data transfer.
+If source is NULL, enter, leave and motion events are sent only to the client that initiated the drag and the client is expected to handle the data passing internally.
+If source is destroyed, the drag-and-drop session will be cancelled.
+
+The origin virtual object is the virtual object where the drag originates and the client must have an active implicit grab that matches the serial.
+
+// FIXME: icon virtual object document
+
+|===
+|arg|description
+
+|source
+|data source for the eventual transfer
+
+|origin
+|virtual object where the drag originates
+
+|icon
+|drag-and-drop icon virtual object
+
+|serial
+|serial number of the implicit grab on the origin
+|===
+
+== data_offer
+`event`
+
+The data_offer event introduces a new zgn_data_offer object, which will subsequently be used in either the data_device.enter event for drag-and-drop.
+Immediately following the data_device.data_offer event, the new data_offer object will send out data_offer.offer events to describe the mime types it offers.
+
+|===
+|arg|description
+
+|id
+|the new data_offer object
+|===
+
+== enter
+`event`
+
+This event is sent when an active drag-and-drop ray enters a virtual object owned by the client.
+The position of the ray at enter time is provided by the origin and direction arguments, float vectors of size 3, in virtual-object-local coordinates, and the direction vector must be normalized.
+
+|===
+|arg|description
+
+|serial
+|serial number of the enter event
+
+|virtual object
+|client virtual object entered
+
+|origin
+|ray origin in the virtual-object-local coordinate system (vec3)
+
+|direction
+|ray direction in the virtual-object-local coordinate system (vec3 normalized).
+
+|id
+|source data_offer object
+|===
+
+== leave
+`event`
+
+This event is sent when the drag-and-drop ray leaves the virtual object and the session ends.
+The client must destroy the zgn_data_offer introduced at enter time at this point.
+
+== motion
+`event`
+
+This event is sent when the drag-and-drop ray moves within the currently focused virtual object.
+The new position of the ray is provided by the origin and direction arguments, float vectors of size 3, in virtual-object-local coordinates, and the direction vector must be normalized.
+
+|===
+|arg|description
+
+|time
+|timestamp with millisecond granularity
+
+|origin
+|ray origin in the virtual-object-local coordinate system (vec3)
+
+|direction
+|ray direction in the virtual-object-local coordinate system (vec3 normalized).
+|===
+
+
+== drop
+`event`
+
+The event is sent when a drag-and-drop operation is ended because the implicit grab is removed.
+
+The drag-and-drop destination is expected to honor the last action received through zgn_data_offer.action, if the resulting action is "copy" or "move", the destination can still perform zgn_data_offer.receive requests, and is expected to end all transfers with a zgn_data_offer.finish request.
+
+If the resulting action is "ask", the action will not be considered final.
+The drag-and-drop destination is expected to perform one last zgn_data_offer.set_actions request, or zgn_data_offer.destroy in order to cancel the operation.
+
+== release
+`request`
+
+This request destroys the data device.

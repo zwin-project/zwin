@@ -11,6 +11,184 @@
     </request>
   </interface>
 
+  <interface name="zgn_data_offer" version="1">
+    <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_offer.adoc"/>
+
+    <enum name="error">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_offer.adoc#error"/>
+      <entry name="invalid_finish" value="0"/>
+      <entry name="invalid_action_mask" value="1"/>
+      <entry name="invalid_action" value="2"/>
+      <entry name="invalid_offer" value="3"/>
+    </enum>
+
+    <request name="accept">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_offer.adoc#accept"/>
+      <arg name="serial" type="uint"/>
+      <arg name="mime_type" type="string" allow-null="true"/>
+    </request>
+
+    <request name="receive">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_offer.adoc#receive"/>
+      <arg name="mime_type" type="string"/>
+      <arg name="fd" type="fd"/>
+    </request>
+
+    <request name="destroy" type="destructor">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_offer.adoc#destroy"/>
+    </request>
+
+    <event name="offer">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_offer.adoc#offer"/>
+      <arg name="mime_type" type="string"/>
+    </event>
+
+    <request name="finish">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_offer.adoc#finish"/>
+    </request>
+
+    <request name="set_actions">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_offer.adoc#set_actions"/>
+      <arg name="dnd_actions" type="uint" enum="zgn_data_device_manager.dnd_action"/>
+      <arg name="preferred_action" type="uint" enum="zgn_data_device_manager.dnd_action"/>
+    </request>
+
+    <event name="source_actions">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_offer.adoc#source_actions"/>
+      <arg name="source_actions" type="uint" enum="zgn_data_device_manager.dnd_action"/>
+    </event>
+
+    <event name="action">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_offer.adoc#action"/>
+      <arg name="dnd_action" type="uint" enum="zgn_data_device_manager.dnd_action"/>
+    </event>
+  </interface>
+
+  <interface name="zgn_data_source" version="1">
+    <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_source.adoc"/>
+
+    <enum name="error">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_source.adoc#error"/>
+      <entry name="invalid_action_mask" value="0"/>
+      <entry name="invalid_source" value="1"/>
+    </enum>
+
+    <request name="offer">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_source.adoc#offer"/>
+      <arg name="mime_type" type="string"/>
+    </request>
+
+    <request name="destroy" type="destructor">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_source.adoc#destroy"/>
+    </request>
+
+    <event name="target">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_source.adoc#target"/>
+      <arg name="mime_type" type="string" allow-null="true"/>
+    </event>
+
+    <event name="send">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_source.adoc#send"/>
+      <arg name="mime_type" type="string"/>
+      <arg name="fd" type="fd"/>
+    </event>
+
+    <event name="cancelled">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_source.adoc#cancelled"/>
+    </event>
+
+    <request name="set_actions">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_source.adoc#set_actions"/>
+      <arg name="dnd_actions" type="uint" enum="zgn_data_device_manager.dnd_action"/>
+    </request>
+
+    <event name="dnd_drop_performed">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_source.adoc#dnd_drop_performed"/>
+    </event>
+
+    <event name="dnd_finished">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_source.adoc#dnd_finished"/>
+    </event>
+
+    <event name="action">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_source.adoc#action"/>
+      <arg name="dnd_action" type="uint" enum="zgn_data_device_manager.dnd_action"/>
+    </event>
+  </interface>
+
+  <interface name="zgn_data_device" version="1">
+    <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc"/>
+
+    <enum name="error">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#error"/>
+      <entry name="role" value="0"/>
+    </enum>
+
+    <request name="start_drag">
+      <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#start_drag"/>
+      <arg name="source" type="object" interface="zgn_data_source" allow-null="true"/>
+      <arg name="origin" type="object" interface="zgn_virtual_object"/>
+      <arg name="icon" type="object" interface="zgn_virtual_object" allow-null="true"/>
+      <arg name="serial" type="uint"/>
+    </request>
+
+    <event name="data_offer">
+      <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#data_offer"/>
+      <arg name="id" type="new_id" interface="zgn_data_offer"/>
+    </event>
+
+    <event name="enter">
+      <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#enter"/>
+      <arg name="serial" type="uint"/>
+      <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
+      <arg name="origin" type="array" summary="vec3"/>
+      <arg name="direction" type="array" summary="vec3"/>
+      <arg name="id" type="object" interface="zgn_data_offer" allow-null="true"/>
+    </event>
+
+    <event name="leave">
+      <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#leave"/>
+    </event>
+
+    <event name="motion">
+      <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#motion"/>
+      <arg name="time" type="uint"/>
+      <arg name="origin" type="array" summary="vec3"/>
+      <arg name="direction" type="array" summary="vec3"/>
+    </event>
+
+    <event name="drop">
+      <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#drop"/>
+    </event>
+
+    <request name="release" type="destructor">
+      <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#release"/>
+    </request>
+  </interface>
+
+  <interface name="zgn_data_device_manager" version="1">
+    <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device_manager.adoc"/>
+
+    <request name="create_data_source">
+      <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device_manager.adoc#create_data_source"/>
+      <arg name="id" type="new_id" interface="zgn_data_source"/>
+    </request>
+
+    <request name="get_data_device">
+      <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device_manager.adoc#get_data_device"/>
+      <arg name="id" type="new_id" interface="zgn_data_device"/>
+      <arg name="seat" type="object" interface="zgn_seat"/>
+    </request>
+
+    <enum name="dnd_action" bitfield="true">
+      <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device_manager.adoc#dnd_action"/>
+      <entry name="none" value="0"/>
+      <entry name="copy" value="1"/>
+      <entry name="move" value="2"/>
+      <entry name="ask" value="4"/>
+    </enum>
+  </interface>
+
   <interface name="zgn_virtual_object" version="1">
     <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_virtual_object.adoc"/>
 
