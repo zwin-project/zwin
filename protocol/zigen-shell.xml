@@ -23,6 +23,12 @@
       <arg name="half_size" type="array"/>
       <arg name="quaternion" type="array"/>
     </request>
+
+    <request name="get_background">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_shell.adoc#get_background"/>
+      <arg name="id" type="new_id" interface="zgn_background"/>
+      <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
+    </request>
   </interface>
 
   <interface name="zgn_cuboid_window" version="1">
@@ -58,6 +64,14 @@
     <request name="rotate">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_cuboid_window.adoc#rotate"/>
       <arg name="quaternion" type="array"/>
+    </request>
+  </interface>
+
+  <interface name="zgn_background" version="1">
+    <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_background.adoc"/>
+
+    <request name="destroy" type="destructor">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_background.adoc#destroy"/>
     </request>
   </interface>
 </protocol>

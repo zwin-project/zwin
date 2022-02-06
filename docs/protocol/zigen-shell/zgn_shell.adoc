@@ -61,3 +61,18 @@ invalid_cuboid_window_size error.
 |quaternion
 |The quaternion of the cuboid window to create. This is just a hint. (vec4) {{x, y, z}, w}
 |===
+
+== get_background
+`request`
+
+TODO
+
+|===
+|arg|description
+
+|id
+|background to create
+
+|virtual_object
+|
+|===
