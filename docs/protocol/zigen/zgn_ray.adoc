@@ -116,7 +116,29 @@ but may be used in future version of this protocol.
 |physical state of the button
 |===
 
+[[axis-enum]]
+== axis
+`enum`
+
+TODO:
+
+[[axis-event]]
+== axis
+`event`
+
+TODO:
+
 == release
 
 Using this request, a client can tell the server that it is not going to use
 the ray object anymore.
+
+== frame
+`event`
+
+TODO:
+
+== axis_discrete
+`event`
+
+TODO:
