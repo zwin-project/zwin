@@ -278,9 +278,32 @@
       <arg name="state" type="uint" enum="button_state"/>
     </event>
 
+    <enum name="axis">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc#axis-enum"/>
+      <entry name="vertical_scroll" value="0"/>
+      <entry name="horizontal_scroll" value="1"/>
+    </enum>
+
+    <event name="axis">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc#axis-event"/>
+      <arg name="time" type="uint" summary="with millisecond granularity"/>
+      <arg name="axis" type="uint" enum="axis" />
+      <arg name="value" type="fixed" />
+    </event>
+
     <request name="release" type="destructor">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc#release"/>
     </request>
+
+    <event name="frame">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc#frame"/>
+    </event>
+
+    <event name="axis_discrete">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc#axis_discrete"/>
+      <arg name="axis" type="uint" enum="axis"/>
+      <arg name="discrete" type="int"/>
+    </event>
   </interface>
 
   <interface name="zgn_keyboard" version="1">
