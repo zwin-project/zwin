@@ -11,6 +11,11 @@ The way to judge the ray intersection should be defined in the role of
 zgn_virtual_object. Ray will not intersect with virtual object without
 a role or with a role which has no definition regarding the ray intersection.
 
+== set_length
+`request`
+
+// TODO:
+
 == enter
 `event`
 
