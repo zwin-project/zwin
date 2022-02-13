@@ -124,6 +124,12 @@
       <entry name="role" value="0"/>
     </enum>
 
+    <request name="set_length">
+      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#set_length"/>
+      <arg name="serial" type="uint" summary="enter serial"/>
+      <arg name="length" type="fixed"/>
+    </request>
+
     <request name="start_drag">
       <description summary="https://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_data_device.adoc#start_drag"/>
       <arg name="source" type="object" interface="zgn_data_source" allow-null="true"/>
