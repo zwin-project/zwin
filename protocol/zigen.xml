@@ -35,6 +35,33 @@
     </request>
   </interface>
 
+  <interface name="zgn_shm" version="1">
+    <request name="create_pool">
+      <arg name="id" type="new_id" interface="zgn_shm_pool"/>
+      <arg name="fd" type="fd"/>
+      <arg name="size" type="int"/>
+    </request>
+  </interface>
+
+  <interface name="zgn_shm_pool" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+
+    <request name="create_buffer">
+      <arg name="id" type="new_id" interface="zgn_buffer"/>
+      <arg name="offset" type="int"/>
+      <arg name="size" type="int"/>
+    </request>
+  </interface>
+
+  <interface name="zgn_buffer" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+
+    <event name="release">
+    </event>
+  </interface>
+
   <interface name="zgn_virtual_object" version="1">
     <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_virtual_object.adoc"/>
 
