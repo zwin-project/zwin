@@ -1,13 +1,52 @@
-zigen_xml = files('zigen.xml')
-zigen_xml_abs_path = join_paths(meson.current_source_dir(), 'zigen.xml')
-zigen_shell_xml = files('zigen-shell.xml')
-zigen_shell_xml_abs_path = join_paths(meson.current_source_dir(), 'zigen-shell.xml')
-zigen_opengl_xml = files('zigen-opengl.xml')
-zigen_opengl_xml_abs_path = join_paths(meson.current_source_dir(), 'zigen-opengl.xml')
+scanner = dependency('wayland-scanner')
+prog_scanner = find_program(scanner.get_variable('wayland_scanner'))
 
-install_data(zigen_xml)
-install_data(zigen_shell_xml)
-install_data(zigen_opengl_xml)
+protocol_names = [
+  'zigen',
+  'zigen-shell',
+  'zigen-opengl',
+]
+
+protocols = {}
+# protocols = {
+#   name: {
+#     'path': <abs path to source xml>,
+#     'client-header': <target>,
+#     'server-header': <target>,
+#     'private-code' : <target>,
+#   },
+# }
+
+foreach proto : protocol_names
+  file = files('@0@.xml'.format(proto))
+
+  proto_info = {
+    'path': join_paths(meson.current_source_dir(), '@0@.xml'.format(proto)),
+  }
+
+  foreach  output_type : [ 'client-header', 'server-header', 'private-code' ]
+    if output_type == 'client-header'
+      output_file = '@0@-client-protocol.h'.format(proto)
+    elif output_type == 'server-header'
+      output_file = '@0@-server-protocol.h'.format(proto)
+    else
+      output_file = '@0@-protocol.c'.format(proto)
+    endif
+
+    target = custom_target(
+      '@0@ @1@'.format(proto, output_type),
+      command: [ prog_scanner, output_type, '@INPUT@', '@OUTPUT@' ],
+      input: file,
+      output: output_file,
+    )
+
+    proto_info += {output_type: target}
+  endforeach
+
+  protocols += {proto: proto_info}
+
+  install_data(file)
+endforeach
 
 pkgconfig.generate(
   name: 'Zigen Protocols',

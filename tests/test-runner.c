@@ -35,7 +35,7 @@ static void run_test(const struct test *t)
   exit(EXIT_SUCCESS);
 }
 
-int main()
+int main(void)
 {
   const struct test *t;
   pid_t pid;
