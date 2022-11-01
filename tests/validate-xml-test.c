@@ -54,3 +54,9 @@ TEST(validate_zigen_opengl_xml)
   const char *zigen_opengl_xml = getenv("ZIGEN_OPENGL_XML");
   validate_xml(zigen_opengl_xml);
 }
+
+TEST(validate_zigen_gles_v32_xml)
+{
+  const char *zigen_gles_v32_xml = getenv("ZIGEN_GLES_V32_XML");
+  validate_xml(zigen_gles_v32_xml);
+}

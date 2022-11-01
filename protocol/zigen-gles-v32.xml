@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocol name="zigen_gles_v32">
+  <copyright>
+    MIT License
+
+    Copyright (c) 2022 Akihiro Kiuchi &amp; Taishi Eguchi
+
+    Permission is hereby granted, free of charge, to any person
+    obtaining a copy of this software and associated documentation files
+    (the "Software"), to deal in the Software without restriction,
+    including without limitation the rights to use, copy, modify, merge,
+    publish, distribute, sublicense, and/or sell copies of the Software,
+    and to permit persons to whom the Software is furnished to do so,
+    subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be
+    included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+    BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+    ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+  </copyright>
+
+  <interface name="zgn_gles_v32" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+
+    <request name="create_rendering_unit">
+      <arg name="id" type="new_id" interface="zgn_rendering_unit"/>
+      <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
+    </request>
+
+    <request name="create_gl_buffer">
+      <arg name="id" type="new_id" interface="zgn_gl_buffer"/>
+    </request>
+
+    <request name="create_gl_shader">
+      <arg name="id" type="new_id" interface="zgn_gl_shader"/>
+      <arg name="source" type="fd"/>
+      <arg name="size" type="uint"/>
+      <arg name="type" type="uint" enum="TBD"/>
+    </request>
+
+    <request name="create_gl_program">
+      <arg name="id" type="new_id" interface="zgn_gl_program"/>
+    </request>
+
+    <request name="create_gl_texture">
+      <arg name="id" type="new_id" interface="zgn_gl_texture"/>
+      <arg name="target" type="uint"/>
+    </request>
+
+    <request name="create_gl_vertex_array">
+      <arg name="id" type="new_id" interface="zgn_gl_vertex_array"/>
+    </request>
+
+    <request name="create_gl_base_technique">
+      <arg name="id" type="new_id" interface="zgn_gl_base_technique"/>
+    </request>
+  </interface>
+
+  <interface name="zgn_rendering_unit" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+  </interface>
+
+  <interface name="zgn_gl_buffer" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+
+    <request name="data">
+      <arg name="target" type="uint"/>
+      <arg name="size" type="array" summary="uint64"/>
+      <arg name="data" type="object" interface="wl_buffer" allow-null="true"/>
+      <arg name="usage" type="uint"/>
+    </request>
+  </interface>
+
+  <interface name="zgn_gl_shader" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+  </interface>
+
+  <interface name="zgn_gl_program" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+
+    <request name="attach">
+      <arg name="shader" type="object" interface="zgn_gl_shader"/>
+    </request>
+
+    <request name="link">
+      <description summary="no re-link"/>
+    </request>
+  </interface>
+
+  <interface name="zgn_gl_texture" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+
+    <request name="image_2d">
+      <arg name="target" type="uint"/>
+      <arg name="level" type="int"/>
+      <arg name="internal_format" type="int"/>
+      <arg name="width" type="uint"/>
+      <arg name="height" type="uint"/>
+      <arg name="border" type="int"/>
+      <arg name="format" type="uint"/>
+      <arg name="type" type="uint"/>
+      <arg name="data" type="object" interface="zgn_gl_buffer" allow-null="true"/>
+    </request>
+  </interface>
+
+  <interface name="zgn_gl_vertex_array" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+
+    <request name="enable_vertex_attrib_array">
+      <arg name="index" type="uint"/>
+    </request>
+
+    <request name="disable_vertex_attrib_array">
+      <arg name="index" type="uint"/>
+    </request>
+
+    <request name="vertex_attrib_pointer">
+      <arg name="index" type="uint"/>
+      <arg name="size" type="int"/>
+      <arg name="type" type="uint"/>
+      <arg name="normalized" type="uint"/>
+      <arg name="stride" type="int"/>
+      <arg name="offset" type="uint"/>
+      <arg name="gl_buffer" type="object" interface="zgn_gl_buffer"/>
+    </request>
+  </interface>
+
+  <interface name="zgn_gl_base_technique" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+
+    <request name="bind_program">
+      <arg name="program" type="object" interface="zgn_gl_program"/>
+    </request>
+
+    <request name="bind_vertex_array">
+      <arg name="vertex_array" type="object" interface="zgn_gl_vertex_array"/>
+    </request>
+
+    <request name="bind_texture">
+      <arg name="location" type="uint"/>
+      <arg name="texture" type="object" interface="zgn_gl_texture"/>
+    </request>
+
+    <request name="uniform_vector">
+      <arg name="location" type="uint"/>
+      <arg name="name" type="string"/>
+      <arg name="type" type="uint" enum="uniform_variable_type"/>
+      <arg name="size" type="uint"/>
+      <arg name="count" type="uint"/>
+      <arg name="value" type="array"/>
+    </request>
+
+    <request name="uniform_matrix">
+      <arg name="location" type="uint"/>
+      <arg name="name" type="string"/>
+      <arg name="type" type="uint" enum="uniform_variable_type"/>
+      <arg name="col" type="uint"/>
+      <arg name="row" type="uint"/>
+      <arg name="count" type="uint"/>
+      <arg name="transpose" type="uint"/>
+      <arg name="value" type="array"/>
+    </request>
+
+    <request name="draw_arrays">
+      <arg name="unit" type="object" interface="zgn_rendering_unit"/>
+      <arg name="mode" type="uint"/>
+      <arg name="first" type="int"/>
+      <arg name="count" type="uint"/>
+    </request>
+
+    <request name="draw_elements">
+      <arg name="unit" type="object" interface="zgn_rendering_unit"/>
+      <arg name="count" type="uint"/>
+      <arg name="type" type="uint"/>
+      <arg name="offset" type="array" summary="uint64"/>
+      <arg name="element_array_buffer" type="object" interface="zgn_gl_buffer" allow-null="true"/>
+    </request>
+
+    <enum name="uniform_variable_type">
+      <entry name="int" value="0"/>
+      <entry name="uint" value="1"/>
+      <entry name="float" value="2"/>
+    </enum>
+  </interface>
+</protocol>

@@ -5,6 +5,7 @@ protocol_names = [
   'zigen',
   'zigen-shell',
   'zigen-opengl',
+  'zigen-gles-v32',
 ]
 
 protocols = {}

@@ -17,6 +17,7 @@ tests = {
       'ZIGEN_XML': protocols['zigen']['path'],
       'ZIGEN_SHELL_XML': protocols['zigen-shell']['path'],
       'ZIGEN_OPENGL_XML': protocols['zigen-opengl']['path'],
+      'ZIGEN_GLES_V32_XML': protocols['zigen-gles-v32']['path'],
     },
     'deps': [ dependency('libxml-2.0') ]
   }
