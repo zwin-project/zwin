@@ -184,6 +184,7 @@
     </request>
 
     <request name="draw_elements">
+      <arg name="mode" type="uint"/>
       <arg name="count" type="uint"/>
       <arg name="type" type="uint"/>
       <arg name="offset" type="array" summary="uint64"/>
