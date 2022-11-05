@@ -61,6 +61,7 @@
 
     <request name="create_gl_base_technique">
       <arg name="id" type="new_id" interface="zgn_gl_base_technique"/>
+      <arg name="unit" type="object" interface="zgn_rendering_unit"/>
     </request>
   </interface>
 
@@ -177,14 +178,12 @@
     </request>
 
     <request name="draw_arrays">
-      <arg name="unit" type="object" interface="zgn_rendering_unit"/>
       <arg name="mode" type="uint"/>
       <arg name="first" type="int"/>
       <arg name="count" type="uint"/>
     </request>
 
     <request name="draw_elements">
-      <arg name="unit" type="object" interface="zgn_rendering_unit"/>
       <arg name="count" type="uint"/>
       <arg name="type" type="uint"/>
       <arg name="offset" type="array" summary="uint64"/>
