@@ -36,6 +36,14 @@
   </interface>
 
   <interface name="zgn_shm" version="1">
+    <enum name="error">
+      <description summary="zgn_shm error values">
+        These errors can be emitted in response to shared memory related requests.
+      </description>
+      <entry name="invalid_size" value="0" summary="invalid size during pool or buffer creation"/>
+      <entry name="invalid_fd" value="1" summary="mapping the file descriptor failed"/>
+    </enum>
+
     <request name="create_pool">
       <arg name="id" type="new_id" interface="zgn_shm_pool"/>
       <arg name="fd" type="fd"/>
@@ -50,6 +58,10 @@
     <request name="create_buffer">
       <arg name="id" type="new_id" interface="zgn_buffer"/>
       <arg name="offset" type="int"/>
+      <arg name="size" type="int"/>
+    </request>
+
+    <request name="resize">
       <arg name="size" type="int"/>
     </request>
   </interface>
