@@ -47,7 +47,7 @@
     <request name="create_pool">
       <arg name="id" type="new_id" interface="zgn_shm_pool"/>
       <arg name="fd" type="fd"/>
-      <arg name="size" type="int"/>
+      <arg name="size" type="array" summary="off_t"/>
     </request>
   </interface>
 
@@ -57,8 +57,8 @@
 
     <request name="create_buffer">
       <arg name="id" type="new_id" interface="zgn_buffer"/>
-      <arg name="offset" type="int"/>
-      <arg name="size" type="int"/>
+      <arg name="offset" type="array" summary="off_t"/>
+      <arg name="size" type="array" summary="off_t"/>
     </request>
 
     <request name="resize">

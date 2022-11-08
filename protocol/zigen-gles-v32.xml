@@ -76,8 +76,7 @@
 
     <request name="data">
       <arg name="target" type="uint"/>
-      <arg name="size" type="array" summary="uint64"/>
-      <arg name="data" type="object" interface="wl_buffer" allow-null="true"/>
+      <arg name="data" type="object" interface="zgn_buffer" allow-null="true"/>
       <arg name="usage" type="uint"/>
     </request>
   </interface>
@@ -141,6 +140,10 @@
   </interface>
 
   <interface name="zgn_gl_base_technique" version="1">
+    <enum name="error">
+      <entry name="technique" value="0" summary="give rendering unit has another technique"/>
+    </enum>
+
     <request name="destroy" type="destructor">
     </request>
 
@@ -154,7 +157,7 @@
 
     <request name="bind_texture">
       <arg name="location" type="uint"/>
-      <arg name="texture" type="object" interface="zgn_gl_texture"/>
+      <arg name="texture" type="object" interface="zgn_gl_texture" allow-null="true"/>
     </request>
 
     <request name="uniform_vector">
