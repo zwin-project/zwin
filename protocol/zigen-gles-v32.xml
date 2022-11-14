@@ -41,7 +41,7 @@
 
     <request name="create_gl_shader">
       <arg name="id" type="new_id" interface="zgn_gl_shader"/>
-      <arg name="source" type="fd"/>
+      <arg name="source_fd" type="fd"/>
       <arg name="size" type="uint"/>
       <arg name="type" type="uint" enum="TBD"/>
     </request>
