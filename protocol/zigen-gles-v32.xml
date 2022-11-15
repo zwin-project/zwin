@@ -41,9 +41,8 @@
 
     <request name="create_gl_shader">
       <arg name="id" type="new_id" interface="zgn_gl_shader"/>
-      <arg name="source_fd" type="fd"/>
-      <arg name="size" type="uint"/>
-      <arg name="type" type="uint" enum="TBD"/>
+      <arg name="buffer" type="object" interface="zgn_buffer"/>
+      <arg name="type" type="uint" enum="zgn_gl_shader.type"/>
     </request>
 
     <request name="create_gl_program">
@@ -82,6 +81,11 @@
   </interface>
 
   <interface name="zgn_gl_shader" version="1">
+    <enum name="type">
+      <entry name="fragment_shader" value="0x8830"/>
+      <entry name="vertex_shader" value="0x8831"/>
+    </enum>
+
     <request name="destroy" type="destructor">
     </request>
   </interface>
