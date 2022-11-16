@@ -94,7 +94,7 @@
     <request name="destroy" type="destructor">
     </request>
 
-    <request name="attach">
+    <request name="attach_shader">
       <arg name="shader" type="object" interface="zgn_gl_shader"/>
     </request>
 
