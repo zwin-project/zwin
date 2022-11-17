@@ -91,6 +91,10 @@
   </interface>
 
   <interface name="zgn_gl_program" version="1">
+    <enum name="error">
+      <entry name="relink" value="0" summary="zgn_gl_program has already linked"/>
+    </enum>
+
     <request name="destroy" type="destructor">
     </request>
 
@@ -145,7 +149,7 @@
 
   <interface name="zgn_gl_base_technique" version="1">
     <enum name="error">
-      <entry name="technique" value="0" summary="give rendering unit has another technique"/>
+      <entry name="technique" value="0" summary="given rendering unit has another technique"/>
     </enum>
 
     <request name="destroy" type="destructor">
