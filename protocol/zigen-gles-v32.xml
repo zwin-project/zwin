@@ -169,7 +169,7 @@
     </request>
 
     <request name="uniform_vector">
-      <description>
+      <description summary="">
         Specify the value of a uniform variable for the bound program object.
         If "name" argument is empty string, server must use `location` argument
         to specify the location of the uniform variable to be modified.
@@ -187,7 +187,6 @@
     <request name="uniform_matrix">
       <arg name="location" type="uint"/>
       <arg name="name" type="string"/>
-      <arg name="type" type="uint" enum="uniform_variable_type"/>
       <arg name="col" type="uint"/>
       <arg name="row" type="uint"/>
       <arg name="count" type="uint"/>
