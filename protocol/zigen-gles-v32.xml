@@ -173,7 +173,7 @@
         Specify the value of a uniform variable for the bound program object.
         If "name" argument is empty string, server must use `location` argument
         to specify the location of the uniform variable to be modified.
-        If "name" is not empty, server must use the "name" as the name of the 
+        If "name" is not empty, server must use the "name" as the name of the
         uniform variable to be modified.
       </description>
       <arg name="location" type="uint"/>
