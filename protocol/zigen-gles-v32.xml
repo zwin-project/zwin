@@ -150,6 +150,7 @@
   <interface name="zgn_gl_base_technique" version="1">
     <enum name="error">
       <entry name="technique" value="0" summary="given rendering unit has another technique"/>
+      <entry name="uniform_variable" value="0" summary="given uniform variable is invalid"/>
     </enum>
 
     <request name="destroy" type="destructor">
