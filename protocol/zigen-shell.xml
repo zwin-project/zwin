@@ -30,9 +30,8 @@
     <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_shell.adoc"/>
 
     <enum name="error">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_shell.adoc#error"/>
       <entry name="role" value="0"/>
-      <entry name="defunct_virtual_object" value="1"/>
+      <entry name="invalid_state" value="1" summary="the client provided an invalid state"/>
     </enum>
 
     <request name="destroy" type="destructor">
@@ -42,13 +41,27 @@
     <request name="get_bounded">
       <arg name="id" type="new_id" interface="zgn_bounded"/>
       <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
+      <arg name="half_size" type="array" summary="vec3"/>
     </request>
   </interface>
 
   <interface name="zgn_bounded" version="1">
     <description summary="bounded virtual object"/>
 
+    <enum name="error">
+      <entry name="unconfigured" value="0" summary="zgn_bounded has never been configured"/>
+    </enum>
+
     <request name="destroy" type="destructor">
+    </request>
+
+    <event name="configure">
+      <arg name="half_size" type="array" summary="vec3"/>
+      <arg name="serial" type="uint"/>
+    </event>
+
+    <request name="ack_configure">
+      <arg name="serial" type="uint"/>
     </request>
   </interface>
 </protocol>
