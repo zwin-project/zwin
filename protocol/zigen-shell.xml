@@ -63,5 +63,10 @@
     <request name="ack_configure">
       <arg name="serial" type="uint"/>
     </request>
+
+    <request name="set_region">
+      <description summary="client can destroy the zgn_region immediately"/>
+      <arg name="region" type="object" interface="zgn_region" allow-null="true"/>
+    </request>
   </interface>
 </protocol>
