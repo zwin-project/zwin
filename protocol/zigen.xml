@@ -37,6 +37,10 @@
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_compositor.adoc#create_virtual_object"/>
       <arg name="id" type="new_id" interface="zgn_virtual_object"/>
     </request>
+
+    <request name="create_region">
+      <arg name="id" type="new_id" interface="zgn_region"/>
+    </request>
   </interface>
 
   <interface name="zgn_shm" version="1">
@@ -95,13 +99,25 @@
     </request>
   </interface>
 
+  <interface name="zgn_region" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+
+    <!-- FIXME: hierarchical node -->
+    <request name="add_cuboid">
+      <arg name="half_size" type="array" summary="vec3"/>
+      <arg name="center" type="array" summary="vec3"/>
+      <arg name="quaternion" type="array" summary="vec4"/>
+    </request>
+  </interface>
+
   <interface name="zgn_seat" version="1">
     <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_seat.adoc"/>
 
     <enum name="capability" bitfield="true">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_seat.adoc#capability"/>
-      <entry name="ray" value="1"/>
-      <entry name="keyboard" value="2"/>
+      <entry name="ray_origin" value="1"/>
+      <entry name="ray_direction" value="2"/>
     </enum>
 
     <enum name="error">
@@ -117,11 +133,6 @@
     <request name="get_ray">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_seat.adoc#get_ray"/>
       <arg name="id" type="new_id" interface="zgn_ray"/>
-    </request>
-
-    <request name="get_keyboard">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_seat.adoc#get_keyboard"/>
-      <arg name="id" type="new_id" interface="zgn_keyboard"/>
     </request>
 
     <request name="release" type="destructor">
@@ -169,63 +180,6 @@
 
     <request name="release" type="destructor">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc#release"/>
-    </request>
-  </interface>
-
-  <interface name="zgn_keyboard" version="1">
-    <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_keyboard.adoc"/>
-
-    <enum name="keymap_format">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_keyboard.adoc#keymap_format"/>
-      <entry name="no_keymap" value="0"/>
-      <entry name="xkb_v1" value="1"/>
-    </enum>
-
-    <event name="keymap">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_keyboard.adoc#keymap"/>
-      <arg name="format" type="uint" enum="keymap_format"/>
-      <arg name="fd" type="fd"/>
-      <arg name="size" type="uint"/>
-    </event>
-
-    <event name="enter">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_keyboard.adoc#enter"/>
-      <arg name="serial" type="uint"/>
-      <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
-      <arg name="keys" type="array"/>
-    </event>
-
-    <event name="leave">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_keyboard.adoc#leave"/>
-      <arg name="serial" type="uint"/>
-      <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
-    </event>
-
-    <enum name="key_state">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_keyboard.adoc#key_state"/>
-      <entry name="released" value="0"/>
-      <entry name="pressed" value="1"/>
-    </enum>
-
-    <event name="key">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_keyboard.adoc#key"/>
-      <arg name="serial" type="uint"/>
-      <arg name="time" type="uint"/>
-      <arg name="key" type="uint"/>
-      <arg name="state" type="uint" enum="key_state"/>
-    </event>
-
-    <event name="modifiers">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_keyboard.adoc#modifiers"/>
-      <arg name="serial" type="uint"/>
-      <arg name="mods_depressed" type="uint"/>
-      <arg name="mods_latched" type="uint"/>
-      <arg name="mods_locked" type="uint"/>
-      <arg name="group" type="uint"/>
-    </event>
-
-    <request name="release" type="destructor">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_keyboard.adoc#release"/>
     </request>
   </interface>
 </protocol>
