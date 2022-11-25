@@ -51,7 +51,6 @@
 
     <request name="create_gl_texture">
       <arg name="id" type="new_id" interface="zgn_gl_texture"/>
-      <arg name="target" type="uint"/>
     </request>
 
     <request name="create_gl_vertex_array">
@@ -108,6 +107,10 @@
   </interface>
 
   <interface name="zgn_gl_texture" version="1">
+    <enum name="error">
+      <entry name="invalid_image_size" value="1"/>
+    </enum>
+
     <request name="destroy" type="destructor">
     </request>
 
@@ -120,7 +123,7 @@
       <arg name="border" type="int"/>
       <arg name="format" type="uint"/>
       <arg name="type" type="uint"/>
-      <arg name="data" type="object" interface="zgn_gl_buffer" allow-null="true"/>
+      <arg name="data" type="object" interface="zgn_buffer"/>
     </request>
   </interface>
 
@@ -165,8 +168,10 @@
     </request>
 
     <request name="bind_texture">
-      <arg name="location" type="uint"/>
+      <arg name="binding" type="uint"/>
+      <arg name="name" type="string"/>
       <arg name="texture" type="object" interface="zgn_gl_texture" allow-null="true"/>
+      <arg name="target" type="uint"/>
     </request>
 
     <request name="uniform_vector">
