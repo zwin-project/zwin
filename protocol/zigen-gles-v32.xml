@@ -193,8 +193,8 @@
     <request name="uniform_matrix">
       <arg name="location" type="uint"/>
       <arg name="name" type="string"/>
-      <arg name="col" type="uint"/>
-      <arg name="row" type="uint"/>
+      <arg name="col" type="uint" summary="number of cols"/>
+      <arg name="row" type="uint" summary="number of rows"/>
       <arg name="count" type="uint"/>
       <arg name="transpose" type="uint"/>
       <arg name="value" type="array"/>
@@ -211,7 +211,7 @@
       <arg name="count" type="uint"/>
       <arg name="type" type="uint"/>
       <arg name="offset" type="array" summary="uint64"/>
-      <arg name="element_array_buffer" type="object" interface="zgn_gl_buffer" allow-null="true"/>
+      <arg name="element_array_buffer" type="object" interface="zgn_gl_buffer"/>
     </request>
 
     <enum name="uniform_variable_type">
