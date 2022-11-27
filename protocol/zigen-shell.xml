@@ -68,5 +68,10 @@
       <description summary="client can destroy the zgn_region immediately"/>
       <arg name="region" type="object" interface="zgn_region" allow-null="true"/>
     </request>
+
+    <request name="move">
+      <arg name="seat" type="object" interface="zgn_seat"/>
+      <arg name="serial" type="uint"/>
+    </request>
   </interface>
 </protocol>
