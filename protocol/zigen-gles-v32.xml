@@ -145,7 +145,7 @@
       <arg name="type" type="uint"/>
       <arg name="normalized" type="uint"/>
       <arg name="stride" type="int"/>
-      <arg name="offset" type="uint"/>
+      <arg name="offset" type="array" summary="uint64"/>
       <arg name="gl_buffer" type="object" interface="zgn_gl_buffer"/>
     </request>
   </interface>
