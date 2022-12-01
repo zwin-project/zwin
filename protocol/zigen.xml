@@ -109,6 +109,11 @@
       <arg name="center" type="array" summary="vec3"/>
       <arg name="quaternion" type="array" summary="vec4"/>
     </request>
+
+    <request name="add_sphere">
+      <arg name="center" type="array" summary="vec3"/>
+      <arg name="radius" type="array" summary="float"/>
+    </request>
   </interface>
 
   <interface name="zgn_seat" version="1">
