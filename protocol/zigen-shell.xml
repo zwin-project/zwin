@@ -43,6 +43,11 @@
       <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
       <arg name="half_size" type="array" summary="vec3"/>
     </request>
+
+    <request name="get_expansive">
+      <arg name="id" type="new_id" interface="zgn_expansive"/>
+      <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
+    </request>
   </interface>
 
   <interface name="zgn_bounded" version="1">
@@ -73,5 +78,19 @@
       <arg name="seat" type="object" interface="zgn_seat"/>
       <arg name="serial" type="uint"/>
     </request>
+  </interface>
+
+  <interface name="zgn_expansive" version="1">
+    <description summary="expansive virtual object"/>
+
+    <request name="destroy" type="destructor"/>
+
+    <event name="enter"/>
+
+    <event name="leave"/>
+
+    <event name="release">
+      <description summary="zgn_expansive will no longer be used after this event"/>
+    </event>
   </interface>
 </protocol>
