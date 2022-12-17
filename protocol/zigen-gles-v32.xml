@@ -133,6 +133,10 @@
       <arg name="type" type="uint"/>
       <arg name="data" type="object" interface="zgn_buffer"/>
     </request>
+
+    <request name="generate_mipmap">
+      <arg name="target" type="uint"/>
+    </request>
   </interface>
 
   <interface name="zgn_gl_sampler" version="1">
