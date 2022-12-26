@@ -183,6 +183,41 @@
       <arg name="state" type="uint" enum="button_state"/>
     </event>
 
+    <enum name="axis">
+      <entry name="vertical_scroll" value="0" summary="vertical axis"/>
+      <entry name="horizontal_scroll" value="1" summary="horizontal axis"/>
+    </enum>
+
+    <event name="axis">
+      <arg name="time" type="uint" summary="timestamp with millisecond granularity"/>
+      <arg name="axis" type="uint" enum="axis" summary="axis type"/>
+      <arg name="value" type="fixed" summary="length of vector in surface-local coordinate space"/>
+    </event>
+
+    <enum name="axis_source">
+      <entry name="wheel" value="0" summary="a physical wheel rotation" />
+      <entry name="finger" value="1" summary="finger on a touch surface" />
+      <entry name="continuous" value="2" summary="continuous coordinate space"/>
+      <entry name="wheel_tilt" value="3" summary="a physical wheel tilt"/>
+    </enum>
+
+    <event name="axis_source">
+      <arg name="axis_source" type="uint" enum="axis_source" summary="source of the axis event"/>
+    </event>
+
+    <event name="axis_stop">
+      <arg name="time" type="uint" summary="timestamp with millisecond granularity"/>
+      <arg name="axis" type="uint" enum="axis" summary="the axis stopped with this event"/>
+    </event>
+
+    <event name="axis_discrete">
+      <arg name="axis" type="uint" enum="axis" summary="axis type"/>
+      <arg name="discrete" type="int" summary="number of steps"/>
+    </event>
+
+    <event name="frame">
+    </event>
+
     <request name="release" type="destructor">
       <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc#release"/>
     </request>
