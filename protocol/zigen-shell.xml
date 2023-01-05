@@ -85,6 +85,11 @@
 
     <request name="destroy" type="destructor"/>
 
+    <request name="set_region">
+      <description summary="client can destroy the zgn_region immediately"/>
+      <arg name="region" type="object" interface="zgn_region" allow-null="true"/>
+    </request>
+
     <event name="enter"/>
 
     <event name="leave"/>
