@@ -69,6 +69,11 @@
       <arg name="serial" type="uint"/>
     </request>
 
+    <request name="set_title">
+      <description summary="double buffered state"/>
+      <arg name="title" type="string"/>
+    </request>
+
     <request name="set_region">
       <description summary="client can destroy the zgn_region immediately"/>
       <arg name="region" type="object" interface="zgn_region" allow-null="true"/>
