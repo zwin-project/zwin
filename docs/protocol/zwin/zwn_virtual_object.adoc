@@ -1,34 +1,34 @@
-= zgn_virtual_object
+= zwn_virtual_object
 
 "Virtual Object" is a concept which represents a unit of interactive 3D object.
 Each virtual object has a local coordinate. Clients draw the content of a
-virtual object and receive the input event (such as zgn_ray.motion) in the
+virtual object and receive the input event (such as zwn_ray.motion) in the
 virtual-object-local space.
 
 A virtual object without a "role" is fairly useless: a compositor does not know
 where, when or how to present it. The role is the purpose of a
-zgn_virtual_object. Examples of roles are a preview object during drag & drop
+zwn_virtual_object. Examples of roles are a preview object during drag & drop
 action and a cuboid window.
 
-Virtual object can have one role at a time, Initially a zgn_virtual_object does
-not have a role. Once a zgn_surface is given a role, it is set permanently for
-the whole lifetime of the zgn_virtual_object object. Giving the current role
+Virtual object can have one role at a time, Initially a zwn_virtual_object does
+not have a role. Once a zwn_surface is given a role, it is set permanently for
+the whole lifetime of the zwn_virtual_object object. Giving the current role
 again in allowed, unless explicitly forbidden by the relevant interface
 specification.
 
 Virtual object roles are given by requests in other interfaces. The request
 should explicitly mention that the request gives a role to a
-zgn_virtual_object. Often, this request also creates new protocol object that
+zwn_virtual_object. Often, this request also creates new protocol object that
 represents the role and add additional functionality or restriction to
-zgn_virtual_object, e.g., the way to draw its content. When a client wants to
-destroy a zgn_virtual_object, they must destroy this 'role object' before the
-zgn_virtual_object.
+zwn_virtual_object, e.g., the way to draw its content. When a client wants to
+destroy a zwn_virtual_object, they must destroy this 'role object' before the
+zwn_virtual_object.
 
 The protocol to draw the content of a virtual object will be defined by other
-interfaces, e.g. zgn_opengl.
+interfaces, e.g. zwn_opengl.
 
 Destroying the role object does not remove the role from the
-zgn_virtual_object, but it may stop the zgn_virtual_object from
+zwn_virtual_object, but it may stop the zwn_virtual_object from
 "playing the role".
 
 == destroy
@@ -52,13 +52,13 @@ Request a notification when it is a good time to start preparing a new
 virtual object state related to its appearance, by creating a frame callback.
 This is useful for throttling redrawing operations, and driving animations.
 
-When a client is animating on a zgn_virtual_object, it can use the 'frame'
+When a client is animating on a zwn_virtual_object, it can use the 'frame'
 request to get notified when it is a good time to commit the next object state.
 If the client commits an update earlier than that, it is likely that some
 update will not make it to the display, and the client is wasting resources
 by calculating the state too often.
 
-The frame request will take effect on the next zgn_virtual_object.commit.
+The frame request will take effect on the next zwn_virtual_object.commit.
 The notification will only be posted for one frame unless
 requested again. The server should give some time for the client
 to calculate and commit the new state after sending the frame callback

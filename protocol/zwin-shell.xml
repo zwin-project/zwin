@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocol name="zigen_shell">
+<protocol name="zwin_shell">
   <copyright>
     MIT License
 
@@ -26,8 +26,8 @@
     SOFTWARE.
   </copyright>
 
-  <interface name="zgn_shell" version="1">
-    <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_shell.adoc"/>
+  <interface name="zwn_shell" version="1">
+    <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin-shell/zwn_shell.adoc"/>
 
     <enum name="error">
       <entry name="role" value="0"/>
@@ -35,26 +35,26 @@
     </enum>
 
     <request name="destroy" type="destructor">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen-shell/zgn_shell.adoc#destroy"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin-shell/zwn_shell.adoc#destroy"/>
     </request>
 
     <request name="get_bounded">
-      <arg name="id" type="new_id" interface="zgn_bounded"/>
-      <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
+      <arg name="id" type="new_id" interface="zwn_bounded"/>
+      <arg name="virtual_object" type="object" interface="zwn_virtual_object"/>
       <arg name="half_size" type="array" summary="vec3"/>
     </request>
 
     <request name="get_expansive">
-      <arg name="id" type="new_id" interface="zgn_expansive"/>
-      <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
+      <arg name="id" type="new_id" interface="zwn_expansive"/>
+      <arg name="virtual_object" type="object" interface="zwn_virtual_object"/>
     </request>
   </interface>
 
-  <interface name="zgn_bounded" version="1">
+  <interface name="zwn_bounded" version="1">
     <description summary="bounded virtual object"/>
 
     <enum name="error">
-      <entry name="unconfigured" value="0" summary="zgn_bounded has never been configured"/>
+      <entry name="unconfigured" value="0" summary="zwn_bounded has never been configured"/>
     </enum>
 
     <request name="destroy" type="destructor">
@@ -75,24 +75,24 @@
     </request>
 
     <request name="set_region">
-      <description summary="client can destroy the zgn_region immediately"/>
-      <arg name="region" type="object" interface="zgn_region" allow-null="true"/>
+      <description summary="client can destroy the zwn_region immediately"/>
+      <arg name="region" type="object" interface="zwn_region" allow-null="true"/>
     </request>
 
     <request name="move">
-      <arg name="seat" type="object" interface="zgn_seat"/>
+      <arg name="seat" type="object" interface="zwn_seat"/>
       <arg name="serial" type="uint"/>
     </request>
   </interface>
 
-  <interface name="zgn_expansive" version="1">
+  <interface name="zwn_expansive" version="1">
     <description summary="expansive virtual object"/>
 
     <request name="destroy" type="destructor"/>
 
     <request name="set_region">
-      <description summary="client can destroy the zgn_region immediately"/>
-      <arg name="region" type="object" interface="zgn_region" allow-null="true"/>
+      <description summary="client can destroy the zwn_region immediately"/>
+      <arg name="region" type="object" interface="zwn_region" allow-null="true"/>
     </request>
 
     <event name="enter"/>
@@ -100,7 +100,7 @@
     <event name="leave"/>
 
     <event name="release">
-      <description summary="zgn_expansive will no longer be used after this event"/>
+      <description summary="zwn_expansive will no longer be used after this event"/>
     </event>
   </interface>
 </protocol>

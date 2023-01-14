@@ -1,15 +1,15 @@
-= zgn_opengl_shader_program
+= zwn_opengl_shader_program
 
 This is an interface to create and build shader programs.
 
-A zgn_opengl_shader_program which has not been called
-zgn_opengl_shader_program.link is useless. Clients need to call
-zgn_opengl_shader_program.link before the zgn_virtual_object.commit
+A zwn_opengl_shader_program which has not been called
+zwn_opengl_shader_program.link is useless. Clients need to call
+zwn_opengl_shader_program.link before the zwn_virtual_object.commit
 to use the shader programs for the rendering in the commit.
 
-The shader program is immutable, and once zgn_opengl_shader_program.link is
+The shader program is immutable, and once zwn_opengl_shader_program.link is
 called, client cannot change the contents of the
-zgn_opengl_shader_program object.
+zwn_opengl_shader_program object.
 
 == error
 `enum`
@@ -33,7 +33,7 @@ zgn_opengl_shader_program object.
 == destroy
 `request`
 
-Destroy a zgn_opengl_shader_program object.
+Destroy a zwn_opengl_shader_program object.
 
 == set_uniform_float_vector
 `request`
@@ -55,7 +55,7 @@ Specify the value of a uniform variable for the program object.
 Set the contents of vertex shader. The compositor reads and compiles the shader
 immediately, and if the compilation fails, the request raises compilation_error.
 
-Clients need to call zgn_opengl_shader_program.link after this request to apply
+Clients need to call zwn_opengl_shader_program.link after this request to apply
 the changes.
 
 == set_fragment_shader
@@ -65,13 +65,13 @@ Set the contents of fragment shader. The compositor reads and compiles the
 shader immediately, and if the compilation fails, the request raises
 compilation_error.
 
-Clients need to call zgn_opengl_shader_program.link after this request to apply
+Clients need to call zwn_opengl_shader_program.link after this request to apply
 the changes.
 
 == link
 `request`
 
-This request links the shader programs set to a zgn_opengl_shader_program before
+This request links the shader programs set to a zwn_opengl_shader_program before
 this request. If it fails to link, this request raises linkage_error.
 
 Once a client calls this request, the client must not call set_vertex_shader,

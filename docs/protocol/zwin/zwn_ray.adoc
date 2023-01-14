@@ -1,14 +1,14 @@
-= zgn_ray
+= zwn_ray
 
-The zgn_ray interface represents a 3D input device which has a origin point and
+The zwn_ray interface represents a 3D input device which has a origin point and
 direction such as 6DoF input device.
 
-The zgn_ray interface generate motion, enter and leave events for the virtual
+The zwn_ray interface generate motion, enter and leave events for the virtual
 object that the ray intersects, and button and axis events for button presses,
 button releases and scrolling.
 
 The way to judge the ray intersection should be defined in the role of
-zgn_virtual_object. Ray will not intersect with virtual object without
+zwn_virtual_object. Ray will not intersect with virtual object without
 a role or with a role which has no definition regarding the ray intersection.
 
 == enter

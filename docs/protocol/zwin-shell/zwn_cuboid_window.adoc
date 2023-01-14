@@ -1,6 +1,6 @@
-= zgn_cuboid_window
+= zwn_cuboid_window
 
-This interface defines a zgn_cuboid_window role which gives an oriented bounding
+This interface defines a zwn_cuboid_window role which gives an oriented bounding
 box to a virtual object. We call the OBB "Cuboid Window". The center of a cuboid
 window matches the origin of its virtual-object-local coordinate system.
 The compositor manages model matrices of virtual objects and places cuboid
@@ -20,7 +20,7 @@ the cuboid window is undefined.
 When a ray intersects with a cuboid window, the ray is regarded as intersected
 with the associated virtual object.
 
-zgn_cuboid_window provides protocols for user interactions such as move and
+zwn_cuboid_window provides protocols for user interactions such as move and
 resize of the cuboid window in the global space.
 
 == destroy
@@ -105,7 +105,7 @@ completed.
 |arg|description
 
 |seat
-|the zgn_seat of the user event
+|the zwn_seat of the user event
 
 |serial
 |the serial of the user event

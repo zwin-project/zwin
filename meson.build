@@ -1,5 +1,5 @@
 project(
-  'zigen', 'c',
+  'zwin', 'c',
   version: '0.0.2',
   license: 'MIT',
   meson_version: '>= 0.58.0',

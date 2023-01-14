@@ -1,4 +1,4 @@
-= Contributing to Zigen
+= Contributing to Zwin
 
 == How to create a Pull Request
 

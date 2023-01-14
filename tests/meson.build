@@ -14,10 +14,10 @@ tests = {
     'sources': protocol_sources,
     'env': {
       'WAYLAND_DTD_PATH': wayland_dtd,
-      'ZIGEN_XML': protocols['zigen']['path'],
-      'ZIGEN_SHELL_XML': protocols['zigen-shell']['path'],
-      'ZIGEN_OPENGL_XML': protocols['zigen-opengl']['path'],
-      'ZIGEN_GLES_V32_XML': protocols['zigen-gles-v32']['path'],
+      'ZWIN_XML': protocols['zwin']['path'],
+      'ZWIN_SHELL_XML': protocols['zwin-shell']['path'],
+      'ZWIN_OPENGL_XML': protocols['zwin-opengl']['path'],
+      'ZWIN_GLES_V32_XML': protocols['zwin-gles-v32']['path'],
     },
     'deps': [ dependency('libxml-2.0') ]
   }
