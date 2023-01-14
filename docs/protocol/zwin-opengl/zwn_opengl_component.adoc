@@ -1,4 +1,4 @@
-= zgn_opengl_component
+= zwn_opengl_component
 
 Graphic Pipeline へのひとまとまりの入力を表す interface.
 主に Virtual object に描画する内容に関する double-buffered state を更新する。
@@ -6,23 +6,23 @@ vertex buffer と shader program が attach され、少なくとも一つ以上
 を持っていて、set_count がされていないと object は render されない。
 
 When clients want to destroy a virtual object, they must destroy the
-bound zgn_opengl_component before the virtual object.
+bound zwn_opengl_component before the virtual object.
 
 == destroy
 `request`
 
-Destroy zgn_opengl_component. Objects attached to a zgn_opengl_component will
+Destroy zwn_opengl_component. Objects attached to a zwn_opengl_component will
 not be destroyed unless otherwise stated in their interface protocols.
 
 == attach_vertex_buffer
 `request`
 
-Attach zgn_opengl_vertex_buffer object to a zgn_opengl_component.
-A zgn_opengl_component cannot have more than one vertex buffer, and if another
+Attach zwn_opengl_vertex_buffer object to a zwn_opengl_component.
+A zwn_opengl_component cannot have more than one vertex buffer, and if another
 vertex buffer has already been attached, it will be replaced.
 
 When a client modifies the content of the vertex buffer currently attached,
-the client has to attach the vertex buffer to the zgn_opengl_component again to
+the client has to attach the vertex buffer to the zwn_opengl_component again to
 notify the update.
 
 Whether the vertex buffer is attached or not is double-buffered state.
@@ -34,11 +34,11 @@ and commit the state before destroying the vertex buffer.
 == attach_element_array_buffer
 `request`
 
-Attach zgn_opengl_element_array_buffer object to a zgn_opengl_component.
-A zgn_opengl_component cannot have more than one element array buffer, and if
+Attach zwn_opengl_element_array_buffer object to a zwn_opengl_component.
+A zwn_opengl_component cannot have more than one element array buffer, and if
 another element array buffer has already been attached, it will be replaced.
 
-When a zgn_opengl_component has a element array buffer attached, a compositor
+When a zwn_opengl_component has a element array buffer attached, a compositor
 constructs a sequence of primitives with the content of the element array
 buffer using, e.g. glDrawElements.
 If not, a compositor uses attached vertex buffer directly
@@ -46,7 +46,7 @@ using, e.g. glDrawArrays.
 
 When a client modifies the content of the element array buffer currently
 attached, the client has to attach the element array buffer to the
-zgn_opengl_component again to notify the update.
+zwn_opengl_component again to notify the update.
 
 Whether the element array buffer is attached or not is double-buffered state.
 
@@ -57,8 +57,8 @@ element array buffer and commit the state before destroying the old buffer.
 == attach_shader_program
 `request`
 
-Attach zgn_opengl_shader_program object to a zgn_opengl_component.
-A zgn_opengl_component cannot have more than one shader program, and if another
+Attach zwn_opengl_shader_program object to a zwn_opengl_component.
+A zwn_opengl_component cannot have more than one shader program, and if another
 shader program has already attached, it will be replaced.
 
 Whether the shader program is attached or not is double-buffered state.
@@ -70,12 +70,12 @@ program and commit the state before destroying the shader program.
 == attach_texture
 `request`
 
-Attach zgn_opengl_texture object to a zgn_opengl_component.
-A zgn_opengl_component cannot have more than one texture, and if another
+Attach zwn_opengl_texture object to a zwn_opengl_component.
+A zwn_opengl_component cannot have more than one texture, and if another
 texture has already been attached, it will be replaced.
 
 When a client modifies the content of the texture currently attached, the
-client has to attach the texture to the zgn_opengl_component again to notify
+client has to attach the texture to the zwn_opengl_component again to notify
 the update.
 
 Whether the texture is attached or not is double-buffered state.
@@ -87,12 +87,12 @@ state before destroying the texture.
 == add_vertex_attribute
 `request`
 
-Add vertex attribute information to a zgn_opengl_component's pending state.
+Add vertex attribute information to a zwn_opengl_component's pending state.
 Clients can add multiple vertex attributes to the pending state, and these
 attributes will be applied atomically when committed. After the commit, the
 pending state regarding vertex attributes will be cleared.
 
-The vertex attributes a zgn_opengl_component has are double-buffered state.
+The vertex attributes a zwn_opengl_component has are double-buffered state.
 
 Please see the specification of OpenGL `glVertexAttribPointer` for more
 information.
@@ -100,8 +100,8 @@ information.
 == clear_vertex_attribute
 `request`
 
-Clear the vertex attributes a zgn_opengl_component has.
-The vertex attributes a zgn_opengl_component has are double-buffered state.
+Clear the vertex attributes a zwn_opengl_component has.
+The vertex attributes a zwn_opengl_component has are double-buffered state.
 
 == set_topology
 `request`

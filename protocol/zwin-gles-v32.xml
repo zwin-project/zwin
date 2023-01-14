@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocol name="zigen_gles_v32">
+<protocol name="zwin_gles_v32">
   <copyright>
     MIT License
 
@@ -26,7 +26,7 @@
     SOFTWARE.
   </copyright>
 
-  <interface name="zgn_gles_v32" version="1">
+  <interface name="zwn_gles_v32" version="1">
     <enum name="error">
       <entry name="invalid_enum" value="0" summary="GL_INVALID_ENUM"/>
     </enum>
@@ -35,59 +35,59 @@
     </request>
 
     <request name="create_rendering_unit">
-      <arg name="id" type="new_id" interface="zgn_rendering_unit"/>
-      <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
+      <arg name="id" type="new_id" interface="zwn_rendering_unit"/>
+      <arg name="virtual_object" type="object" interface="zwn_virtual_object"/>
     </request>
 
     <request name="create_gl_buffer">
-      <arg name="id" type="new_id" interface="zgn_gl_buffer"/>
+      <arg name="id" type="new_id" interface="zwn_gl_buffer"/>
     </request>
 
     <request name="create_gl_shader">
-      <arg name="id" type="new_id" interface="zgn_gl_shader"/>
-      <arg name="buffer" type="object" interface="zgn_buffer"/>
-      <arg name="type" type="uint" enum="zgn_gl_shader.type"/>
+      <arg name="id" type="new_id" interface="zwn_gl_shader"/>
+      <arg name="buffer" type="object" interface="zwn_buffer"/>
+      <arg name="type" type="uint" enum="zwn_gl_shader.type"/>
     </request>
 
     <request name="create_gl_program">
-      <arg name="id" type="new_id" interface="zgn_gl_program"/>
+      <arg name="id" type="new_id" interface="zwn_gl_program"/>
     </request>
 
     <request name="create_gl_texture">
-      <arg name="id" type="new_id" interface="zgn_gl_texture"/>
+      <arg name="id" type="new_id" interface="zwn_gl_texture"/>
     </request>
 
     <request name="create_gl_sampler">
-      <arg name="id" type="new_id" interface="zgn_gl_sampler"/>
+      <arg name="id" type="new_id" interface="zwn_gl_sampler"/>
     </request>
 
     <request name="create_gl_vertex_array">
-      <arg name="id" type="new_id" interface="zgn_gl_vertex_array"/>
+      <arg name="id" type="new_id" interface="zwn_gl_vertex_array"/>
     </request>
 
     <request name="create_gl_base_technique">
-      <arg name="id" type="new_id" interface="zgn_gl_base_technique"/>
-      <arg name="unit" type="object" interface="zgn_rendering_unit"/>
+      <arg name="id" type="new_id" interface="zwn_gl_base_technique"/>
+      <arg name="unit" type="object" interface="zwn_rendering_unit"/>
     </request>
   </interface>
 
-  <interface name="zgn_rendering_unit" version="1">
+  <interface name="zwn_rendering_unit" version="1">
     <request name="destroy" type="destructor">
     </request>
   </interface>
 
-  <interface name="zgn_gl_buffer" version="1">
+  <interface name="zwn_gl_buffer" version="1">
     <request name="destroy" type="destructor">
     </request>
 
     <request name="data">
       <arg name="target" type="uint"/>
-      <arg name="data" type="object" interface="zgn_buffer" allow-null="true"/>
+      <arg name="data" type="object" interface="zwn_buffer" allow-null="true"/>
       <arg name="usage" type="uint"/>
     </request>
   </interface>
 
-  <interface name="zgn_gl_shader" version="1">
+  <interface name="zwn_gl_shader" version="1">
     <enum name="type">
       <entry name="fragment_shader" value="0x8830"/>
       <entry name="vertex_shader" value="0x8831"/>
@@ -97,16 +97,16 @@
     </request>
   </interface>
 
-  <interface name="zgn_gl_program" version="1">
+  <interface name="zwn_gl_program" version="1">
     <enum name="error">
-      <entry name="relink" value="0" summary="zgn_gl_program has already linked"/>
+      <entry name="relink" value="0" summary="zwn_gl_program has already linked"/>
     </enum>
 
     <request name="destroy" type="destructor">
     </request>
 
     <request name="attach_shader">
-      <arg name="shader" type="object" interface="zgn_gl_shader"/>
+      <arg name="shader" type="object" interface="zwn_gl_shader"/>
     </request>
 
     <request name="link">
@@ -114,7 +114,7 @@
     </request>
   </interface>
 
-  <interface name="zgn_gl_texture" version="1">
+  <interface name="zwn_gl_texture" version="1">
     <enum name="error">
       <entry name="invalid_image_size" value="1"/>
     </enum>
@@ -131,7 +131,7 @@
       <arg name="border" type="int"/>
       <arg name="format" type="uint"/>
       <arg name="type" type="uint"/>
-      <arg name="data" type="object" interface="zgn_buffer"/>
+      <arg name="data" type="object" interface="zwn_buffer"/>
     </request>
 
     <request name="generate_mipmap">
@@ -139,7 +139,7 @@
     </request>
   </interface>
 
-  <interface name="zgn_gl_sampler" version="1">
+  <interface name="zwn_gl_sampler" version="1">
     <request name="destroy" type="destructor">
     </request>
 
@@ -174,7 +174,7 @@
     </request>
   </interface>
 
-  <interface name="zgn_gl_vertex_array" version="1">
+  <interface name="zwn_gl_vertex_array" version="1">
     <request name="destroy" type="destructor">
     </request>
 
@@ -193,11 +193,11 @@
       <arg name="normalized" type="uint"/>
       <arg name="stride" type="int"/>
       <arg name="offset" type="array" summary="uint64"/>
-      <arg name="gl_buffer" type="object" interface="zgn_gl_buffer"/>
+      <arg name="gl_buffer" type="object" interface="zwn_gl_buffer"/>
     </request>
   </interface>
 
-  <interface name="zgn_gl_base_technique" version="1">
+  <interface name="zwn_gl_base_technique" version="1">
     <enum name="error">
       <entry name="technique" value="0" summary="given rendering unit has another technique"/>
       <entry name="uniform_variable" value="0" summary="given uniform variable is invalid"/>
@@ -207,19 +207,19 @@
     </request>
 
     <request name="bind_program">
-      <arg name="program" type="object" interface="zgn_gl_program"/>
+      <arg name="program" type="object" interface="zwn_gl_program"/>
     </request>
 
     <request name="bind_vertex_array">
-      <arg name="vertex_array" type="object" interface="zgn_gl_vertex_array"/>
+      <arg name="vertex_array" type="object" interface="zwn_gl_vertex_array"/>
     </request>
 
     <request name="bind_texture">
       <arg name="binding" type="uint"/>
       <arg name="name" type="string"/>
-      <arg name="texture" type="object" interface="zgn_gl_texture"/>
+      <arg name="texture" type="object" interface="zwn_gl_texture"/>
       <arg name="target" type="uint"/>
-      <arg name="sampler" type="object" interface="zgn_gl_sampler"/>
+      <arg name="sampler" type="object" interface="zwn_gl_sampler"/>
     </request>
 
     <request name="uniform_vector">
@@ -259,7 +259,7 @@
       <arg name="count" type="uint"/>
       <arg name="type" type="uint"/>
       <arg name="offset" type="array" summary="uint64"/>
-      <arg name="element_array_buffer" type="object" interface="zgn_gl_buffer"/>
+      <arg name="element_array_buffer" type="object" interface="zwn_gl_buffer"/>
     </request>
 
     <enum name="uniform_variable_type">

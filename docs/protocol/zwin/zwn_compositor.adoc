@@ -1,6 +1,6 @@
-= zgn_compositor
+= zwn_compositor
 
-A compositor in zigen windowing system.
+A compositor in zwin windowing system.
 This object is a singleton global.
 
 == create_virtual_object

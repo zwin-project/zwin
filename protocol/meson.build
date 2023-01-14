@@ -2,10 +2,10 @@ scanner = dependency('wayland-scanner')
 prog_scanner = find_program(scanner.get_variable('wayland_scanner'))
 
 protocol_names = [
-  'zigen',
-  'zigen-shell',
-  'zigen-opengl',
-  'zigen-gles-v32',
+  'zwin',
+  'zwin-shell',
+  'zwin-opengl',
+  'zwin-gles-v32',
 ]
 
 protocols = {}
@@ -50,12 +50,12 @@ foreach proto : protocol_names
 endforeach
 
 pkgconfig.generate(
-  name: 'Zigen Protocols',
-  description: 'Zigen protocol files',
+  name: 'Zwin Protocols',
+  description: 'Zwin protocol files',
   version: meson.project_version(),
   variables: [
     'datarootdir=' + join_paths('${prefix}', get_option('datadir')),
     'pkgdatadir=' + join_paths('${datarootdir}', meson.project_name()),
   ],
-  filebase: 'zigen-protocols',
+  filebase: 'zwin-protocols',
 )

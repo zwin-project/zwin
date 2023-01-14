@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocol name="zigen">
+<protocol name="zwin">
   <copyright>
     MIT License
 
@@ -26,26 +26,26 @@
     SOFTWARE.
   </copyright>
 
-  <interface name="zgn_compositor" version="1">
-    <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_compositor.adoc"/>
+  <interface name="zwn_compositor" version="1">
+    <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_compositor.adoc"/>
 
     <enum name="error">
       <entry name="wl_array_size" value="0"/>
     </enum>
 
     <request name="create_virtual_object">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_compositor.adoc#create_virtual_object"/>
-      <arg name="id" type="new_id" interface="zgn_virtual_object"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_compositor.adoc#create_virtual_object"/>
+      <arg name="id" type="new_id" interface="zwn_virtual_object"/>
     </request>
 
     <request name="create_region">
-      <arg name="id" type="new_id" interface="zgn_region"/>
+      <arg name="id" type="new_id" interface="zwn_region"/>
     </request>
   </interface>
 
-  <interface name="zgn_shm" version="1">
+  <interface name="zwn_shm" version="1">
     <enum name="error">
-      <description summary="zgn_shm error values">
+      <description summary="zwn_shm error values">
         These errors can be emitted in response to shared memory related requests.
       </description>
       <entry name="invalid_size" value="0" summary="invalid size during pool or buffer creation"/>
@@ -53,18 +53,18 @@
     </enum>
 
     <request name="create_pool">
-      <arg name="id" type="new_id" interface="zgn_shm_pool"/>
+      <arg name="id" type="new_id" interface="zwn_shm_pool"/>
       <arg name="fd" type="fd"/>
       <arg name="size" type="array" summary="off_t"/>
     </request>
   </interface>
 
-  <interface name="zgn_shm_pool" version="1">
+  <interface name="zwn_shm_pool" version="1">
     <request name="destroy" type="destructor">
     </request>
 
     <request name="create_buffer">
-      <arg name="id" type="new_id" interface="zgn_buffer"/>
+      <arg name="id" type="new_id" interface="zwn_buffer"/>
       <arg name="offset" type="array" summary="off_t"/>
       <arg name="size" type="array" summary="off_t"/>
     </request>
@@ -74,7 +74,7 @@
     </request>
   </interface>
 
-  <interface name="zgn_buffer" version="1">
+  <interface name="zwn_buffer" version="1">
     <request name="destroy" type="destructor">
     </request>
 
@@ -82,24 +82,24 @@
     </event>
   </interface>
 
-  <interface name="zgn_virtual_object" version="1">
-    <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_virtual_object.adoc"/>
+  <interface name="zwn_virtual_object" version="1">
+    <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_virtual_object.adoc"/>
 
     <request name="destroy" type="destructor">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_virtual_object.adoc#destroy"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_virtual_object.adoc#destroy"/>
     </request>
 
     <request name="commit">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_virtual_object.adoc#commit"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_virtual_object.adoc#commit"/>
     </request>
 
     <request name="frame">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_virtual_object.adoc#frame"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_virtual_object.adoc#frame"/>
       <arg name="callback" type="new_id" interface="wl_callback"/>
     </request>
   </interface>
 
-  <interface name="zgn_region" version="1">
+  <interface name="zwn_region" version="1">
     <request name="destroy" type="destructor">
     </request>
 
@@ -116,67 +116,67 @@
     </request>
   </interface>
 
-  <interface name="zgn_seat" version="1">
-    <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_seat.adoc"/>
+  <interface name="zwn_seat" version="1">
+    <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_seat.adoc"/>
 
     <enum name="capability" bitfield="true">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_seat.adoc#capability"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_seat.adoc#capability"/>
       <entry name="ray_origin" value="1"/>
       <entry name="ray_direction" value="2"/>
     </enum>
 
     <enum name="error">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_seat.adoc#error"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_seat.adoc#error"/>
       <entry name="missing_capability" value="0"/>
     </enum>
 
     <event name="capabilities">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_seat.adoc#capabilities"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_seat.adoc#capabilities"/>
       <arg name="capabilities" type="uint" enum="capability"/>
     </event>
 
     <request name="get_ray">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_seat.adoc#get_ray"/>
-      <arg name="id" type="new_id" interface="zgn_ray"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_seat.adoc#get_ray"/>
+      <arg name="id" type="new_id" interface="zwn_ray"/>
     </request>
 
     <request name="release" type="destructor">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_seat.adoc#release"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_seat.adoc#release"/>
     </request>
   </interface>
 
-  <interface name="zgn_ray" version="1">
-    <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc"/>
+  <interface name="zwn_ray" version="1">
+    <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc"/>
 
     <event name="enter">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc#enter"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc#enter"/>
       <arg name="serial" type="uint"/>
-      <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
+      <arg name="virtual_object" type="object" interface="zwn_virtual_object"/>
       <arg name="origin" type="array" summary="vec3"/>
       <arg name="direction" type="array" summary="vec3"/>
     </event>
 
     <event name="leave">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc#leave"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc#leave"/>
       <arg name="serial" type="uint"/>
-      <arg name="virtual_object" type="object" interface="zgn_virtual_object"/>
+      <arg name="virtual_object" type="object" interface="zwn_virtual_object"/>
     </event>
 
     <event name="motion">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc#motion"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc#motion"/>
       <arg name="time" type="uint"/>
       <arg name="origin" type="array" summary="vec3"/>
       <arg name="direction" type="array" summary="vec3"/>
     </event>
 
     <enum name="button_state">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc#button_state"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc#button_state"/>
       <entry name="released" value="0"/>
       <entry name="pressed" value="1"/>
     </enum>
 
     <event name="button">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc#button"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc#button"/>
       <arg name="serial" type="uint"/>
       <arg name="time" type="uint"/>
       <arg name="button" type="uint"/>
@@ -219,7 +219,7 @@
     </event>
 
     <request name="release" type="destructor">
-      <description summary="http://github.com/zigen-project/zigen/blob/main/docs/protocol/zigen/zgn_ray.adoc#release"/>
+      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc#release"/>
     </request>
   </interface>
 </protocol>
