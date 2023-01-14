@@ -1,7 +1,7 @@
-= zgn_shell
+= zwn_shell
 
-The zgn_shell interface is exposed as a global object enabling clients to turn
-their zgn_virtual_objects into cuboid windows. It defines the basic
+The zwn_shell interface is exposed as a global object enabling clients to turn
+their zwn_virtual_objects into cuboid windows. It defines the basic
 functionality needed for clients and the compositor to create cuboid windows
 that can be dragged, resized, rotated, etc, as well as transient cuboid windows
 such as preview objects during drag & drop action.
@@ -16,7 +16,7 @@ such as preview objects during drag & drop action.
 |given virtual object has another role
 
 |defunct_virtual_object
-|zgn_shell was destroyed before children
+|zwn_shell was destroyed before children
 
 |invalid_cuboid_window
 |given cuboid window parameter is invalid
@@ -25,16 +25,16 @@ such as preview objects during drag & drop action.
 == destroy
 `request`
 
-Destroy this zgn_shell object.
+Destroy this zwn_shell object.
 
-Destroying a bound zgn_shell object while there are virtual object role objects
-still alive created by this zgn_shell object instance is illegal and will result
-in zgn_shell.defunct_virtual_object error.
+Destroying a bound zwn_shell object while there are virtual object role objects
+still alive created by this zwn_shell object instance is illegal and will result
+in zwn_shell.defunct_virtual_object error.
 
 == get_cuboid_window
 `request`
 
-This creates a zgn_cuboid_window object for the given zgn_virtual_object and
+This creates a zwn_cuboid_window object for the given zwn_virtual_object and
 gives the cuboid window role to the virtual object.
 
 The compositor uses the half_size argument as a hint of the size of a new cuboid

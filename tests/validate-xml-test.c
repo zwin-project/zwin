@@ -37,26 +37,26 @@ void validate_xml(const char *xml_path)
   assert(success);
 }
 
-TEST(validate_zigen_xml)
+TEST(validate_zwin_xml)
 {
-  const char *zigen_xml = getenv("ZIGEN_XML");
-  validate_xml(zigen_xml);
+  const char *zwin_xml = getenv("ZWIN_XML");
+  validate_xml(zwin_xml);
 }
 
-TEST(validate_zigen_shell_xml)
+TEST(validate_zwin_shell_xml)
 {
-  const char *zigen_shell_xml = getenv("ZIGEN_SHELL_XML");
-  validate_xml(zigen_shell_xml);
+  const char *zwin_shell_xml = getenv("ZWIN_SHELL_XML");
+  validate_xml(zwin_shell_xml);
 }
 
-TEST(validate_zigen_opengl_xml)
+TEST(validate_zwin_opengl_xml)
 {
-  const char *zigen_opengl_xml = getenv("ZIGEN_OPENGL_XML");
-  validate_xml(zigen_opengl_xml);
+  const char *zwin_opengl_xml = getenv("ZWIN_OPENGL_XML");
+  validate_xml(zwin_opengl_xml);
 }
 
-TEST(validate_zigen_gles_v32_xml)
+TEST(validate_zwin_gles_v32_xml)
 {
-  const char *zigen_gles_v32_xml = getenv("ZIGEN_GLES_V32_XML");
-  validate_xml(zigen_gles_v32_xml);
+  const char *zwin_gles_v32_xml = getenv("ZWIN_GLES_V32_XML");
+  validate_xml(zwin_gles_v32_xml);
 }

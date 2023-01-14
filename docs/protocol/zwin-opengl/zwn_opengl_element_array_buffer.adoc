@@ -1,9 +1,9 @@
-= zgn_opengl_element_array_buffer
+= zwn_opengl_element_array_buffer
 
 == destroy
 `request`
 
-Destroy a zgn_opengl_element_array_buffer object.
+Destroy a zwn_opengl_element_array_buffer object.
 
 == attach
 `request`
@@ -12,25 +12,25 @@ Set a buffer of a element array buffer. The content of the buffer is double-buff
 state.
 
 The initial contents of a element array buffer are void; there is no content.
-zgn_opengl_element_array_buffer.attach assigns the given buffer as the pending
-buffer. zgn_virtual_object.commit makes the pending buffer the new element array
+zwn_opengl_element_array_buffer.attach assigns the given buffer as the pending
+buffer. zwn_virtual_object.commit makes the pending buffer the new element array
 buffer to be used for the next rendering. After commit, there is no pending
 buffer until the next attach.
 
-// TODO: wl_buffer will be replaced with zgn_buffer
+// TODO: wl_buffer will be replaced with zwn_buffer
 Committing a pending buffer allows the compositor to read the content of the
 buffer. The compositor may access the content at any time after the
-zgn_virtual_object.commit request. When the compositor will not access the
+zwn_virtual_object.commit request. When the compositor will not access the
 buffer any more, it will send the wl_buffer.release event.
 Only after receiving wl_buffer.release, the client may reuse the buffer. A
 wl_buffer that has been attached and then replaced by another attach instead of
 committed will not receive a release event, and is not used by the compositor.
 
 If a pending buffer has been committed to more than one
-zgn_opengl_element_array_buffer, the delivery of wl_buffer.release events
+zwn_opengl_element_array_buffer, the delivery of wl_buffer.release events
 becomes undefined. A well-behaved client should not attach a buffer to more
 than one element array buffer. Instead, clients can attach a element array buffer
-to more than one zgn_opengl_component.
+to more than one zwn_opengl_component.
 
 Destroying the wl_buffer after wl_buffer.release does not change the contents
 of the element array buffer. Destroying the wl_buffer before wl_buffer.release

@@ -1,13 +1,13 @@
-= zgn_keyboard
+= zwn_keyboard
 
-The zgn_keyboard interface represents one or more keyboards associated with a
+The zwn_keyboard interface represents one or more keyboards associated with a
 seat.
 
 == keymap_format
 `enum`
 
 This specifies the format of the keymap provided to the client with the
-zgn_keyboard.keymap event.
+zwn_keyboard.keymap event.
 
 |===
 |entry|description
@@ -106,7 +106,7 @@ The key is a platform-specific key code that can be interpreted by feeding it
 to the keyboard mapping (see the keymap event).
 
 It this event produces a change in modifiers, then the resulting
-zgn_keyboard.modifiers event must be sent after this event.
+zwn_keyboard.modifiers event must be sent after this event.
 
 |===
 |arg|description
