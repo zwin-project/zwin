@@ -4,7 +4,6 @@ prog_scanner = find_program(scanner.get_variable('wayland_scanner'))
 protocol_names = [
   'zwin',
   'zwin-shell',
-  'zwin-opengl',
   'zwin-gles-v32',
 ]
 

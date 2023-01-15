@@ -1,9 +1,0 @@
-= zwn_compositor
-
-A compositor in zwin windowing system.
-This object is a singleton global.
-
-== create_virtual_object
-`request`
-
-Ask the compositor to create a new virtual object.

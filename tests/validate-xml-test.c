@@ -49,12 +49,6 @@ TEST(validate_zwin_shell_xml)
   validate_xml(zwin_shell_xml);
 }
 
-TEST(validate_zwin_opengl_xml)
-{
-  const char *zwin_opengl_xml = getenv("ZWIN_OPENGL_XML");
-  validate_xml(zwin_opengl_xml);
-}
-
 TEST(validate_zwin_gles_v32_xml)
 {
   const char *zwin_gles_v32_xml = getenv("ZWIN_GLES_V32_XML");
