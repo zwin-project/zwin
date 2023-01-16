@@ -10,7 +10,7 @@ This zwin library provides a communication protocol and library implementation o
 
 == Try it out
 
-If you want to try out Zwin, you should probably install Zen (our reference compositor). See our installation guide: https://www.zwin.dev/getting_started/system_requirements
+If you want to try out Zwin, you should probably install Zen (our reference compositor). See https://www.zwin.dev/getting_started/system_requirements[our installation guide].
 
 
 == Build & Install
