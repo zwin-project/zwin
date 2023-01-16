@@ -8,6 +8,11 @@ Zwin is a project to define a protocol for the 3D Windowing System on top of htt
 
 This zwin library provides a communication protocol and library implementation of the protocol.
 
+== Try it out
+
+If you want to try out Zwin, you should probably install Zen. See our installation guide: https://www.zwin.dev/getting_started/system_requirements
+
+
 == Build & Install
 
 [source, shell]
