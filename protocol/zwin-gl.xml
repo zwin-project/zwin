@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocol name="zwin_gles_v32">
+<protocol name="zwin_gl">
   <copyright>
     MIT License
 
@@ -26,7 +26,7 @@
     SOFTWARE.
   </copyright>
 
-  <interface name="zwn_gles_v32" version="1">
+  <interface name="zwn_gl" version="1">
     <enum name="error">
       <entry name="invalid_enum" value="0" summary="GL_INVALID_ENUM"/>
     </enum>
@@ -34,8 +34,21 @@
     <request name="destroy" type="destructor">
     </request>
 
-    <request name="create_rendering_unit">
-      <arg name="id" type="new_id" interface="zwn_rendering_unit"/>
+    <request name="create_gl_context">
+      <arg name="id" type="new_id" interface="zwn_gl_context"/>
+      <arg name="zwn_compositor" type="object" interface="zwn_compositor"/>
+    </request>
+  </interface>
+
+  <interface name="zwn_gl_context" version="1">
+    <request name="destroy" type="destructor">
+    </request>
+
+    <event name="destroyed">
+    </event>
+
+    <request name="create_gl_rendering_unit">
+      <arg name="id" type="new_id" interface="zwn_gl_rendering_unit"/>
       <arg name="virtual_object" type="object" interface="zwn_virtual_object"/>
     </request>
 
@@ -67,12 +80,17 @@
 
     <request name="create_gl_base_technique">
       <arg name="id" type="new_id" interface="zwn_gl_base_technique"/>
-      <arg name="unit" type="object" interface="zwn_rendering_unit"/>
+      <arg name="unit" type="object" interface="zwn_gl_rendering_unit"/>
     </request>
   </interface>
 
-  <interface name="zwn_rendering_unit" version="1">
+  <interface name="zwn_gl_rendering_unit" version="1">
+  <!-- TODO(@Aki-7): Describe what happens when the virtual object is destroyed -->
     <request name="destroy" type="destructor">
+    </request>
+
+    <request name="change_visibility">
+      <arg name="visible" type="uint" summary="false: 0, true: otherwise"/>
     </request>
   </interface>
 
@@ -230,7 +248,7 @@
         If "name" is not empty, server must use the "name" as the name of the
         uniform variable to be modified.
       </description>
-      <arg name="location" type="uint"/>
+      <arg name="location" type="int"/>
       <arg name="name" type="string"/>
       <arg name="type" type="uint" enum="uniform_variable_type"/>
       <arg name="size" type="uint"/>
@@ -239,7 +257,7 @@
     </request>
 
     <request name="uniform_matrix">
-      <arg name="location" type="uint"/>
+      <arg name="location" type="int"/>
       <arg name="name" type="string"/>
       <arg name="col" type="uint" summary="number of cols"/>
       <arg name="row" type="uint" summary="number of rows"/>

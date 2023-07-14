@@ -27,80 +27,204 @@
   </copyright>
 
   <interface name="zwn_shell" version="1">
-    <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin-shell/zwn_shell.adoc"/>
+    <description summary="create interactive virtual object">
+      TODO: description
 
-    <enum name="error">
-      <entry name="role" value="0"/>
-      <entry name="invalid_state" value="1" summary="the client provided an invalid state"/>
-    </enum>
+      zwn_bounded and zwn_expansive are role objects that assign a role to a virtual object.
+      When the role object is created, the associated virtual object is not yet mapped.
+
+      Mapping a virtual object of the zwn_shell-based role is defined as making it possible for the virtual object to be displayed by the compositor.
+      Note that a mapped virtual object is not guaranteed to be visible.
+    </description>
 
     <request name="destroy" type="destructor">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin-shell/zwn_shell.adoc#destroy"/>
+      <description summary="destroy zwn_shell">
+        Destroy this zwn_shell object.
+
+        <!-- Destroying a bound zwn_shell object while there are virtual objects
+        still alive created by this zwn_shell object instance is illegal and
+        will result in a defunct_virtual_objects error. -->
+      </description>
     </request>
 
     <request name="get_bounded">
-      <arg name="id" type="new_id" interface="zwn_bounded"/>
-      <arg name="virtual_object" type="object" interface="zwn_virtual_object"/>
-      <arg name="half_size" type="array" summary="vec3"/>
+      <description summary="assign the bounded virtual object role">
+        This creates an zwn_bounded object for the given virtual object and
+        gives the zwn_bounded role to the virtual object.
+
+        See the documentation of zwn_bounded for more details about what an
+        zwn_bounded is and how it is used.
+      </description>
+
+      <arg name="id" type="new_id" interface="zwn_bounded" summary="the new bounded virtual object"/>
+      <arg name="virtual_object" type="object" interface="zwn_virtual_object" summary="the virtual object to be assigned the role"/>
     </request>
 
     <request name="get_expansive">
-      <arg name="id" type="new_id" interface="zwn_expansive"/>
-      <arg name="virtual_object" type="object" interface="zwn_virtual_object"/>
+      <description summary="assign the expansive virtual object role">
+        This creates an zwn_expansive object for the given virtual object and
+        gives the zwn_expansive role to the virtual object.
+
+        See the documentation of zwn_expansive for more details about what an
+        zwn_expansive is and how it is used.
+      </description>
+
+      <arg name="id" type="new_id" interface="zwn_expansive" summary="the new expansive virtual object"/>
+      <arg name="virtual_object" type="object" interface="zwn_virtual_object" summary="the virtual object to be assigned the role"/>
     </request>
   </interface>
 
   <interface name="zwn_bounded" version="1">
-    <description summary="bounded virtual object"/>
+    <description summary="bounded virtual object">
+      TODO: description about zwn_bounded
+
+      Bounded virtual object state is double-buffered, and the client must call
+      zwn_virtual_object.commit on the corresponding virtual object for the 
+      state to take effect.
+
+      To map an unmapped state virtual object of this role object, the client and compositor must perform the following procedure.
+      (1) The client sends an initial commit.
+      (2) The compositor replies with a zwn_bounded.configure event.
+      (3) The client acknowledges it with an ack_configure request and commits it.
+      The client is allowed to send other requests in between, unless otherwise specified in the request details.
+      The second commit of an unmapped virtual object without an ack_configure request results in an unconfigured error.
+    </description>
 
     <enum name="error">
       <entry name="unconfigured" value="0" summary="zwn_bounded has never been configured"/>
+      <entry name="invalid_serial" value="1" summary="invalid serial number when acking a configure event"/>
+      <entry name="invalid_half_size" value="2" summary="given half size is invalid"/>
     </enum>
 
     <request name="destroy" type="destructor">
+      <description summary="destroy the zwn_bounded">
+        This request destroys the role object and unmaps the virtual object.
+      </description>
     </request>
 
     <event name="configure">
-      <arg name="half_size" type="array" summary="vec3"/>
-      <arg name="serial" type="uint"/>
+      <description summary="suggest a virtual object state change">
+        This configure event asks the client to resize its bounded virtual object.
+
+        The half_size argument specifies a hint to the bounded virtual object about how it should be resized in virtual-object-local coordinates.
+
+        If half_size[0] (width) is zero, it means that the client should decide the width of its own bounded virtual object.
+        This can happen when the compositor needs to configure the half_size of the bounded virtual object but doesn't have any information about a previous or expected size.
+        The same applies to half_size[1] and half_size[2].
+
+        Clients should arrange their virtual object for the new states, and then send an ack_configure request with the serial sent in this configure event at some point before committing the new virtual object state.
+
+        If the client receives multiple configure events before it can response to one, it is free to discard all but the last event it received.
+      </description>
+
+      <arg name="half_size" type="array" summary="(vec3) the hint of the bounded virtual object size"/>
+      <arg name="serial" type="uint" summary="serial number of the configure event"/>
     </event>
 
     <request name="ack_configure">
-      <arg name="serial" type="uint"/>
+      <description summary="ack a configure event">
+        When a configure event is received, if a client commits the virtual object in response to the configure event, then the client must make an ack_configure request sometime before the commit request, passing along the serial of the configure event.
+
+        The client determines the size of the next bounded virtual object using the half_size hint from the corresponding configure event, and tells it to the compositor using the half_size argument of this request.
+
+        If the client receives multiple configure events before it can respond to one, it only has to ack the last configure event.
+        Acking a configure event that was never sent raises an invalid_serial error.
+
+        A client is not required to commit immediately after sending an ack_configure request -- it may event ack_configure multiple times before its next virtual object commit.
+
+        A client may send multiple ack_configure requests before committing, but only the last request sent before a commit indicates which configure event the client really is responding to.
+
+        Sending an ack_configure request consumes the serial number sent with the request, as well as the serial numbers sent by all configure events sent on this zwn_bounded prior to the configure event referenced by the committed serial.
+
+        It is an error to issue multiple ack_configure requests referencing a serial from the same configure event, or to issue an ack_configure request referencing a serial from a configure event issued before the event identified by the last ack_configure request for the same zwn_bounded.
+        Doing so will raise an invalid_serial error.
+      </description>
+
+      <arg name="half_size" type="array" summary="(vec3) the bounded virtual object size"/>
+      <arg name="serial" type="uint" summary="the serial from the configure event"/>
     </request>
 
     <request name="set_title">
-      <description summary="double buffered state"/>
+      <description summary="set title">
+        Set a short title for the virtual object.
+
+        The title is double-buffered state.
+
+        This string may be used to identify the surface in a task bar, virtual object list, or other user interface elements provided by the compositor.
+
+        The string must be encoded in UTF-8.
+      </description>
+
       <arg name="title" type="string"/>
     </request>
 
-    <request name="set_region">
-      <description summary="client can destroy the zwn_region immediately"/>
-      <arg name="region" type="object" interface="zwn_region" allow-null="true"/>
+    <request name="set_input_region">
+      <description summary="set input region">
+        This request sets the region of the virtual object that can interact with a ray.
+
+        The compositor ignores the parts of the input region that fall outside of the bounded virtual object.
+
+        The input region is specified in virtual-object-local coordinates.
+
+        The input region is a double-buffered state.
+
+        The initial value for an input region is empty. That means that the bounded virtual object cannot interact with a ray.
+
+        Setting the pending input region has copy semantics, and the zwn_region object can be destroyed immediately.
+        A NULL zwn_region causes the input region to be set to empty.
+      </description>
+
+      <arg name="region" type="object" interface="zwn_region" allow-null="true" summary="input region"/>
     </request>
 
     <request name="move">
-      <arg name="seat" type="object" interface="zwn_seat"/>
-      <arg name="serial" type="uint"/>
+      <description summary="Start an interactive move">
+        Start an interactive, user-driven move of the virtual object.
+
+        This request must be used in response to some sort of user action like a button press, key press, or touch down event.
+        The passed serial is used to determine the type of interactive move (touch, pointer, etc.).
+
+        The server may ignore move requests depending on the state of the virtual object, or if the passed serial is no longer valid.
+
+        When triggered, the virtual object loses the focus of the devices (ray, keyboard, etc.) used for the move.
+        It is up to the compositor to visually indicate that the move is taking place, such as updating a pointer cursor, during the move.
+        There is no guarantee that the device focus will return when the move is complete.
+      </description>
+
+      <arg name="seat" type="object" interface="zwn_seat" summary="the zwn_seat of the user event"/>
+      <arg name="serial" type="uint" summary="the serial of the user event"/>
     </request>
   </interface>
 
   <interface name="zwn_expansive" version="1">
-    <description summary="expansive virtual object"/>
+    <description summary="">
+    </description>
 
-    <request name="destroy" type="destructor"/>
+    <request name="destroy" type="destructor">
+      <description summary="">
+      </description>
+    </request>
 
     <request name="set_region">
-      <description summary="client can destroy the zwn_region immediately"/>
+      <description summary="client can destroy the zwn_region immediately">
+      </description>
+
       <arg name="region" type="object" interface="zwn_region" allow-null="true"/>
     </request>
 
-    <event name="enter"/>
+    <event name="enter">
+      <description summary="client can destroy the zwn_region immediately">
+      </description>
+    </event>
 
-    <event name="leave"/>
+    <event name="leave">
+      <description summary="client can destroy the zwn_region immediately">
+      </description>
+    </event>
 
     <event name="release">
-      <description summary="zwn_expansive will no longer be used after this event"/>
+      <description summary="zwn_expansive will no longer be used after this event">
+      </description>
     </event>
   </interface>
 </protocol>

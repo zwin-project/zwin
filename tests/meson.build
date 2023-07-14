@@ -16,7 +16,7 @@ tests = {
       'WAYLAND_DTD_PATH': wayland_dtd,
       'ZWIN_XML': protocols['zwin']['path'],
       'ZWIN_SHELL_XML': protocols['zwin-shell']['path'],
-      'ZWIN_GLES_V32_XML': protocols['zwin-gles-v32']['path'],
+      'ZWIN_GL_XML': protocols['zwin-gl']['path'],
     },
     'deps': [ dependency('libxml-2.0') ]
   }

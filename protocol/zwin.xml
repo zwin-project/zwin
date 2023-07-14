@@ -27,83 +27,261 @@
   </copyright>
 
   <interface name="zwn_compositor" version="1">
-    <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_compositor.adoc"/>
+    <!-- Use the word "3D" instead of XR or immersive, as this can be extended to systems such as holograms -->
+    <description summary="a compositor for a 3D space">
+      The zwn_compositor object is responsible for composing the 3D content from
+      multiple clients into a 3D space.
+    </description>
 
     <enum name="error">
-      <entry name="wl_array_size" value="0"/>
+      <description summary="zwn protocol error values">
+        These errors can be emitted in response to any zwin-related request.
+
+        The zwin-related protocol uses wl_array to substitute for arguments of
+        types that cannot be represented by the argument types defined in
+        wayland. For arguments that make such substitutions, the intended type
+        is written at the beginning of the summary. If the size of wl_array
+        doesn't match the size of the intended type, invalid_wl_array_size is
+        emitted. vecN is a N-element array of IEC 559 float.
+      </description>
+
+      <entry name="invalid_wl_array_size" value="0" summary="invalid argument array size"/>
     </enum>
 
     <request name="create_virtual_object">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_compositor.adoc#create_virtual_object"/>
-      <arg name="id" type="new_id" interface="zwn_virtual_object"/>
+      <description summary="create a new virtual object">
+        Ask the compositor to create a new virtual object.
+      </description>
+
+      <arg name="id" type="new_id" interface="zwn_virtual_object" summary="the new virtual object"/>
     </request>
 
     <request name="create_region">
-      <arg name="id" type="new_id" interface="zwn_region"/>
+      <description summary="create a new 3D region">
+        Ask the compositor to create a new 3D region.
+      </description>
+
+      <arg name="id" type="new_id" interface="zwn_region" summary="the new zwn_region"/>
     </request>
   </interface>
 
   <interface name="zwn_shm" version="1">
+    <description summary="shared memory support for zwin">
+      A singleton global object that provides support for shared memory.
+
+      Unlike wl_shm, it is intended for use outside the pixel buffer and
+      therefore does not have formatting information.
+
+      For details on usage, including formatting, follow the description of the
+      interface that uses zwn_shm.
+    </description>
+
     <enum name="error">
       <description summary="zwn_shm error values">
-        These errors can be emitted in response to shared memory related requests.
+        These errors can be emitted in response to zwn_shm requests.
       </description>
       <entry name="invalid_size" value="0" summary="invalid size during pool or buffer creation"/>
       <entry name="invalid_fd" value="1" summary="mapping the file descriptor failed"/>
     </enum>
 
     <request name="create_pool">
-      <arg name="id" type="new_id" interface="zwn_shm_pool"/>
-      <arg name="fd" type="fd"/>
-      <arg name="size" type="array" summary="off_t"/>
+      <description summary="create a shm pool for zwin">
+        Create a new zwn_shm_pool object.
+
+        The pool can be used to create zwn_buffer objects. The compositor will
+        mmap `size` bytes of the passed file descriptor, to use as backing
+        memory for the pool.
+      </description>
+
+      <arg name="id" type="new_id" interface="zwn_shm_pool" summary="pool to create"/>
+      <arg name="fd" type="fd" summary="file descriptor for the pool"/>
+      <arg name="size" type="array" summary="(int64_t) pool size in bytes"/>
     </request>
   </interface>
 
   <interface name="zwn_shm_pool" version="1">
+    <description summary="a shared memory pool">
+      The zwn_shm_pool object encapsulates a piece of memory shared between the
+      compositor and the client. Through the zwn_shm_pool object, the client can
+      allocate shared memory zwn_buffer objects. All objects created through the
+      same pool share the same underlying mapped memory. Reusing the mapped
+      memory avoids the setup/teardown overhead and is useful when interactively
+      resizing a buffer or for many small buffers.
+    </description>
+
     <request name="destroy" type="destructor">
+      <description summary="destroy the pool">
+        Destroy the shared memory pool.
+
+        The mmapped memory will be released when all buffers that have been
+        created from this pool are gone.
+      </description>
     </request>
 
     <request name="create_buffer">
-      <arg name="id" type="new_id" interface="zwn_buffer"/>
-      <arg name="offset" type="array" summary="off_t"/>
-      <arg name="size" type="array" summary="off_t"/>
+      <description summary="create a buffer from the pool">
+        Create a zwn_buffer object from the pool.
+
+        The buffer uses an area of the pool specified by the offset and size.
+
+        A buffer will keep a reference to the pool it was created from so it is
+        valid to destroy the pool immediately after creating a buffer from it.
+      </description>
+
+      <arg name="id" type="new_id" interface="zwn_buffer" summary="buffer to create"/>
+      <arg name="offset" type="array" summary="(int64_t) buffer byte offset within the pool, in bytes"/>
+      <arg name="size" type="array" summary="(int64_t) buffer size, in bytes"/>
     </request>
 
     <request name="resize">
-      <arg name="size" type="int"/>
+      <description summary="change the size of the pool mapping">
+        This request will cause the compositor to remap the backing memory for
+        the pool from the  file descriptor passed when the pool was created, but
+        using the new size. This request can only be used to make the pool
+        bigger.
+
+        This request only changes the amount of bytes that are mmapped by the
+        compositor and does not touch the file corresponding to the file
+        descriptor passed at creation time. It is the client's responsibility to
+        ensure that the file is at least as big as the new pool size.
+      </description>
+
+      <arg name="size" type="int" summary="new size of the pool, in bytes"/>
     </request>
   </interface>
 
   <interface name="zwn_buffer" version="1">
+    <description summary="general buffer object">
+      zwn_buffer is intended to be used for various purposes, such as vertex
+      arrays and shader source code, and the detailed usage, including format,
+      is specified by the interface using zwn_buffer.
+    </description>
+
     <request name="destroy" type="destructor">
+      <description summary="destroy a buffer">
+        Destroy a buffer.
+
+        For possible side effects to an object using zwn_buffer, see the
+        description of each object.
+      </description>
     </request>
 
     <event name="release">
+      <description summary="compositor releases buffer">
+        Sent when this zwn_buffer is no longer used by the compositor.
+        The client is now free to reuse or destroy this buffer and its backing
+        storage.
+      </description>
     </event>
   </interface>
 
   <interface name="zwn_virtual_object" version="1">
-    <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_virtual_object.adoc"/>
+    <description summary="3D object abstraction">
+      Virtual object is a concept that represents a unit of interactive 3D
+      objects. Each virtual object has local coordinates. Clients draw
+      content to and receive input from virtual objects, but the details of how
+      they draw and receive input are defined by other interfaces.
+
+      A virtual object without a "role" is fairly useless: a compositor does not
+      know where, when, or how to present it. The role is the purpose of a
+      zwn_virtual_object.
+
+      A virtual object can have only one role at a time. Initially a
+      zwn_virtual_object does not have a role. Once a zwn_virtual_object is
+      given a role, it is set permanently for the whole lifetime of the
+      zwn_virtual_object. Giving the current role again is allowed, unless
+      explicitly forbidden by the relevant interface specification.
+
+      Virtual object roles are given by requests in other interfaces.
+      The request should explicitly mention that this request gives a role to a
+      zwn_virtual_object. Often, this request also creates a new protocol object
+      that represents the role and adds additional functionality to
+      zwn_virtual_object. When a client wants to destroy a zwn_virtual_object,
+      they must destroy this role object before the zwn_virtual_object;
+      otherwise, a defunct_role_object error is sent. Destroying the role object
+      does not remove the role from the zwn_virtual_object, but it may stop the
+      zwn_virtual_object from "playing the role."
+    </description>
+
+    <enum name="error">
+      <description summary="zwn_virtual_object error values">
+        These errors can be emitted in response to zwn_virtual_object requests.
+      </description>
+
+      <entry name="defunct_role_object" value="0" summary="virtual object was destroyed before its role object"/>
+      <entry name="role" value="1" summary="virtual_object has another role"/>
+    </enum>
 
     <request name="destroy" type="destructor">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_virtual_object.adoc#destroy"/>
+      <description summary="delete virtual object">
+        Deletes the virtual object and invalidates its object ID.
+      </description>
     </request>
 
     <request name="commit">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_virtual_object.adoc#commit"/>
+      <description summary="commit pending virtual object state">
+        Virtual object state is double-buffered. Protocol requests modify the
+        pending state, as opposed to the current state in use by the compositor.
+        A commit request atomically applies all pending state, replacing the
+        current state. After commit, the new pending state is as documented for 
+        ach related request.
+
+        All requests that need a commit to become effective are documented to
+        affect the double-buffered state.
+
+        Other interfaces may add further double-buffered virtual object state.
+      </description>
     </request>
 
     <request name="frame">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_virtual_object.adoc#frame"/>
-      <arg name="callback" type="new_id" interface="wl_callback"/>
+      <description summary="request a frame throttling hint">
+        Request a notification when it is a good time to start preparing a new
+        virtual object state related to its appearance, by creating a frame
+        callback. This is useful for throttling redrawing operations, and
+        driving animations.
+
+        When a client is animating on a zwn_virtual_object, it can use the
+        'frame' request to get notified when it is a good time to prepare and
+        commit the next state of the animation. If the client commits an update
+        earlier than that, it is likely that some update will not make it to the
+        user, and the client is wasting resources by calculating the state too
+        often.
+
+        The frame request will take effect on the next
+        zwn_virtual_object.commit. The notification will only be posted for one
+        frame unless requested again. The compositor should give some time for
+        the client to prepare and commit the new state after sending the frame
+        callback events to let it hit the next output refresh.
+
+        A compositor should avoid signaling the frame callbacks if the virtual
+        object is not visible in any way, e.g., the virtual object is out of
+        view, or completely obscured.
+
+        The object returned by this request will be destroyed by the compositor
+        after the callback is fired and as such the client must not attempt to
+        use it after that point.
+
+        The callback_data passed in the callback is the current time,
+        in milliseconds, with an undefined base.
+      </description>
+
+      <arg name="callback" type="new_id" interface="wl_callback" summary="callback object for the frame request"/>
     </request>
   </interface>
 
   <interface name="zwn_region" version="1">
+    <description summary="3D region">
+      zwn_region describes a 3D area. For example, it can be set as a collider
+      for a virtual object and used to determine collision with zwn_ray.
+    </description>
+
     <request name="destroy" type="destructor">
+      <description summary="destroy 3D region">
+        Destroy the region. This will invalidate the object ID.
+      </description>
     </request>
 
-    <!-- FIXME: hierarchical node -->
+    <!-- FIXME: hierarchical node / add description -->
     <request name="add_cuboid">
       <arg name="half_size" type="array" summary="vec3"/>
       <arg name="center" type="array" summary="vec3"/>
@@ -117,84 +295,227 @@
   </interface>
 
   <interface name="zwn_seat" version="1">
-    <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_seat.adoc"/>
+    <description summary="group of input devices for virtual object">
+      zwn_seat is a group of input devices that interact with virtual objects.
+      This object is published as a global during start-up or when such a device
+      is hot-plugged. zwn_seat typically has a ray and maintains a keyboard
+      focus and a ray focus.
+    </description>
 
     <enum name="capability" bitfield="true">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_seat.adoc#capability"/>
-      <entry name="ray_origin" value="1"/>
-      <entry name="ray_direction" value="2"/>
+      <description summary="zwn_seat capability bitmask">
+        This is a bitmask of capabilities this seat has; if a member is set,
+        then it is present on the seat.
+      </description>
+
+      <entry name="ray_origin" value="1" summary="the seat has one or more ray devices whose origin is movable"/>
+      <entry name="ray_direction" value="2" summary="the seat has one or more ray devices whose direction is movable"/>
+      <entry name="keyboard" value="4" summary="the seat has one or more keyboards"/>
     </enum>
 
     <enum name="error">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_seat.adoc#error"/>
-      <entry name="missing_capability" value="0"/>
+      <description summary="zwn_seat error values">
+        These errors can be emitted in response to zwn_seat requests.
+      </description>
+
+      <entry name="missing_capability" value="0" summary="get_ray called on seat without the matching capability"/>
     </enum>
 
     <event name="capabilities">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_seat.adoc#capabilities"/>
-      <arg name="capabilities" type="uint" enum="capability"/>
+      <description summary="seat capabilities changed">
+        This is emitted whenever a seat gains or loses the input device
+        capabilities. The argument is a capability enum containing the complete
+        set of capabilities this seat has.
+
+        When the ray_origin or ray_direction is added, a client may create a
+        zwn_ray object using the zwn_seat.get_ray request. This object will
+        receive ray events until the capabilities are removed in the future.
+
+        When the ray_origin and ray_direction are removed, a client should
+        destroy the zwn_ray objects associated with the seat where the
+        capability was removed, using the zwn_ray.release request. No further
+        ray events will be received on these objects.
+
+        The above behavior also applies to zwn_keyboard with the keyboard
+        capability.
+      </description>
+
+      <arg name="capabilities" type="uint" enum="capability" summary="capabilities of the zwn_seat"/>
     </event>
 
     <request name="get_ray">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_seat.adoc#get_ray"/>
-      <arg name="id" type="new_id" interface="zwn_ray"/>
+      <description summary="return ray object">
+        The ID provided will be initialized to the zwn_ray interface for this
+        zwn_seat.
+
+        This request only takes effect if the seat has the ray capability, or
+        has had the ray capability in the past. It is a protocol violation to
+        issue this request on a seat that has never had the ray capability.
+        The missing_capability error will be sent in this case.
+      </description>
+
+      <arg name="id" type="new_id" interface="zwn_ray" summary="seat ray"/>
     </request>
 
     <request name="release" type="destructor">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_seat.adoc#release"/>
+      <description summary="release the seat object">
+        Using this request, a client can tell the compositor that it is not
+        going to use the seat object anymore.
+      </description>
     </request>
   </interface>
 
   <interface name="zwn_ray" version="1">
-    <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc"/>
+    <description summary="ray input device">      
+      The zwn_ray interface represents one or more input devices that can
+      represent a ray. The ray must have an origin and a direction, one or both
+      of which must be controllable. Depending on the compositor, the mouse
+      alone can be a zwn_ray, since it can control the ray's direction.
+
+      The zgn_ray interface generates motion, enter and leave events for the
+      virtual object that the ray intersects,  and button and axis events for
+      button presses, button releases, and scrolling.
+
+      How the intersection of a ray and virtual objects is judged must be
+      defined in the role object of zwn_virtual_object. A ray will not intersect
+      a virtual object without a role or with a role that does not have a
+      description regarding ray intersection.
+    </description>
 
     <event name="enter">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc#enter"/>
-      <arg name="serial" type="uint"/>
-      <arg name="virtual_object" type="object" interface="zwn_virtual_object"/>
-      <arg name="origin" type="array" summary="vec3"/>
-      <arg name="direction" type="array" summary="vec3"/>
+      <description summary="enter event">
+        Notification that this seat's ray is focused on a certain virtual object. 
+
+        The capabilities argument represents the capabilities of the device that
+        actually operated the ray when it entered the virtual object. Therefore,
+        it may be different from the capabilities of the seat. For example, when
+        there is a device with both ray_origin and ray_direction capabilities
+        and another device with only ray_direction capabilities, the
+        capabilities of the seat are ray_origin and ray_ ray_origin. And then,
+        when a device with only ray_direction capabilities is used and entered
+        into a virtual object, the capabilities argument of the enter event will
+        be only ray_direction.
+
+        The capability of the ray device does not change from the enter event to
+        the leave event. If it changes, the compositor must make the ray leave,
+        and enter again with the changed capabilities.
+      </description>
+
+      <arg name="serial" type="uint" summary="serial number of the enter event"/>
+      <arg name="virtual_object" type="object" interface="zwn_virtual_object" summary="virtual object entered by the ray"/>
+      <arg name="origin" type="array" summary="(vec3) ray origin in the virtual-object-local coorinate system"/>
+      <arg name="direction" type="array" summary="(vec3) normalized ray direction in the virtual-object-local coordinate system"/>
+      <arg name="capabilities" type="uint" enum="zwn_seat.capabilities" summary="capabilities of the ray; combination of ray_origin and ray_direction"/>
     </event>
 
     <event name="leave">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc#leave"/>
-      <arg name="serial" type="uint"/>
-      <arg name="virtual_object" type="object" interface="zwn_virtual_object"/>
+      <description summary="leave event">
+        Notification that this seat's ray is no longer focused on a certain
+        virtual object.
+
+        The leave notification is sent before the enter notification for the new
+        focus.
+      </description>
+
+      <arg name="serial" type="uint" summary="serial number of the leave event"/>
+      <arg name="virtual_object" type="object" interface="zwn_virtual_object" summary="virtual object left by the ray"/>
     </event>
 
     <event name="motion">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc#motion"/>
-      <arg name="time" type="uint"/>
-      <arg name="origin" type="array" summary="vec3"/>
-      <arg name="direction" type="array" summary="vec3"/>
+      <description summary="motion event">
+        Notification of ray motion. The arguments origin and direction are in
+        the virtual-object-local coordinates.
+      </description>
+
+      <arg name="time" type="uint" summary="timestamp with millisecond granularity"/>
+      <arg name="origin" type="array" summary="(vec3) virtual-object-local origin of the ray"/>
+      <arg name="direction" type="array" summary="(vec3) virtual-object-local direction of the ray"/>
     </event>
 
     <enum name="button_state">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc#button_state"/>
-      <entry name="released" value="0"/>
-      <entry name="pressed" value="1"/>
+      <description summary="physical button state">
+        Describes the physical state of a button that produced the button event.
+      </description>
+
+      <entry name="released" value="0" summary="the button is not pressed"/>
+      <entry name="pressed" value="1" summary="the button is pressed"/>
     </enum>
 
     <event name="button">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc#button"/>
-      <arg name="serial" type="uint"/>
-      <arg name="time" type="uint"/>
-      <arg name="button" type="uint"/>
-      <arg name="state" type="uint" enum="button_state"/>
+      <description summary="button event">
+        Button click and release notifications.
+
+        The ray target of the click is given by the last motion or enter event.
+        The time argument is a timestamp with millisecond granularity, with an
+        undefined base.
+
+        The button is a button code as defined in the Linux kernel's
+        linux/input-event-codes.h header file, e.g. BTN_LEFT.
+
+        Any 16-bit button code value is reserved for future additions to the
+        kernel's event code list. All other button codes above 0xFFFF are
+        currently undefined but may be used in future versions of this protocol.
+      </description>
+
+      <arg name="serial" type="uint" summary="serial number of the button event"/>
+      <arg name="time" type="uint" summary="timestamp with millisecond granularity"/>
+      <arg name="button" type="uint" summary="button that produced the event"/>
+      <arg name="state" type="uint" enum="button_state" summary="physical state of the button"/>
     </event>
 
     <enum name="axis">
+      <description summary="axis types">
+        Describes the axis types of scroll events.
+      </description>
+
       <entry name="vertical_scroll" value="0" summary="vertical axis"/>
       <entry name="horizontal_scroll" value="1" summary="horizontal axis"/>
     </enum>
 
     <event name="axis">
+      <description summary="axis event">
+        Scroll and other axis notifications.
+
+        For scroll events (vertical and horizontal scroll axes), the value
+        parameter is the length of a vector along the specified axis in a
+        coordinate space identical to those of motion events, representing a
+        relative movement along the specified axis.
+
+        For devices that support movements non-parallel to axes multiple axis
+        events will be emitted.
+
+        When applicable, for example for touch pads, the server can choose to
+        emit scroll events where the motion vector is equivalent to a motion
+        event vector.
+
+        When applicable, a client can transform its content relative to the
+        scroll distance.
+      </description>
+
       <arg name="time" type="uint" summary="timestamp with millisecond granularity"/>
       <arg name="axis" type="uint" enum="axis" summary="axis type"/>
       <arg name="value" type="fixed" summary="length of vector in surface-local coordinate space"/>
     </event>
 
     <enum name="axis_source">
+      <description summary="axis source types">
+        Describes the axis types of scroll events. This indicates to the client
+        how an axis event was physically generated; a client may adjust the user
+        interface accordingly. For example, scroll events from a "finger" source
+        may be in a smooth coordinate space with kinetic scrolling whereas a
+        "wheel" source may be in discrete steps of a number of lines.
+
+        The "continuous" axis source is a device generating events in a
+        continuous coordinate space, but using something other than a finger.
+        One example for this source is button-based scrolling where the vertical
+        motion of a device is converted to scroll events while a button is held
+        down.
+
+        The "wheel tilt" axis source indicates that the actual device is a wheel
+        but the scroll event is not caused by a rotation but a (usually
+        sideways) tilt of the wheel.
+      </description>
+
       <entry name="wheel" value="0" summary="a physical wheel rotation" />
       <entry name="finger" value="1" summary="finger on a touch surface" />
       <entry name="continuous" value="2" summary="continuous coordinate space"/>
@@ -202,24 +523,134 @@
     </enum>
 
     <event name="axis_source">
+      <description summary="axis source event">
+        Source information for scroll and other axes.
+
+        This event does not occur on its own. It is sent before a zwn_ray.frame
+        event and carries the source information for all events within that
+        frame.
+
+        The source specifies how this event was generated. If the source is
+        zwn_ray.axis_source.finger, a zwn_ray.axis_stop event will be sent when
+        the user lifts the finger off the device.
+
+        If the source is zwn_ray.axis_source.wheel,
+        zwn_ray.axis_source.wheel_tilt or zwn_ray.axis_source.continuous,
+        a zwn_ray.axis_stop event may or may not be sent. Whether a compositor
+        sends an axis_stop event for these sources is hardware-specific and
+        implementation-dependent; clients must not rely on receiving an
+        axis_stop event for these scroll sources and should treat scroll
+        sequences from these scroll sources as unterminated by default.
+
+        This event is optional. If the source is unknown for a particular axis
+        event sequence, no event is sent. Only one zwn_ray.axis_source event is
+        permitted per frame.
+
+        The order of zwn_ray.axis_discrete and zwn_ray.axis_source is not
+        guaranteed.
+      </description>
+
       <arg name="axis_source" type="uint" enum="axis_source" summary="source of the axis event"/>
     </event>
 
     <event name="axis_stop">
+      <description summary="axis stop event">
+        Stop notification for scroll and other axes.
+
+        For some zwn_ray.axis_source types, a zwn_ray.axis_stop event is sent to
+        notify a client that the axis sequence has terminated. This enables the
+        client to implement kinetic scrolling. See the zwn_ray.axis_source
+        documentation for information on when this event may be generated.
+
+        Any zwn_ray.axis events with the same axis_source after this event
+        should be considered as the start of a new axis motion.
+
+        The timestamp is to be interpreted identical to the timestamp in the
+        zwn_ray.axis event. The timestamp value may be the same as a preceding
+        zwn_ray.axis event.
+      </description>
+
       <arg name="time" type="uint" summary="timestamp with millisecond granularity"/>
       <arg name="axis" type="uint" enum="axis" summary="the axis stopped with this event"/>
     </event>
 
     <event name="axis_discrete">
+      <description summary="axis click event">
+        Discrete step information for scroll and other axes.
+
+        This event carries the axis value of the zwn_ray.axis event in discrete
+        steps (e.g. mouse wheel clicks).
+
+        This event does not occur on its own, it is coupled with a zwn_ray.axis
+        event that represents this axis value on a continuous scale. The
+        protocol guarantees that each axis_discrete event is always followed by
+        exactly one axis event with the same axis number within the same
+        zwn_ray.frame. Note that the protocol allows for other events to occur
+        between the axis_discrete and its coupled axis event, including other
+        axis_discrete or axis events. A zwn_ray.frame must not contain more than
+        one axis_discrete event per axis type.
+
+        This event is optional; continuous scrolling devices like two-finger
+        scrolling on touchpads do not have discrete steps and do not generate
+        this event.
+
+        The discrete value carries the directional information. e.g. a value of
+        -2 is two steps towards the negative direction of this axis.
+
+        The axis number is identical to the axis number in the associated axis
+        event.
+
+        The order of zwn_ray.axis_discrete and zwn_ray.axis_source is not
+        guaranteed.
+      </description>
+
       <arg name="axis" type="uint" enum="axis" summary="axis type"/>
       <arg name="discrete" type="int" summary="number of steps"/>
     </event>
 
     <event name="frame">
+      <description summary="end of a ray event sequence">
+        Indicates the end of a set of events that logically belong together.
+        A client is expected to accumulate the data in all events within the
+        frame before proceeding.
+
+        All zwn_ray events before a zwn_ray.frame event belong logically
+        together. For example, in a diagonal scroll motion the compositor will
+        send an optional zwn_ray.axis_source event, two zwn_ray.axis events
+        (horizontal and vertical) and finally a zwn_ray.frame event. The client
+        may use this information to calculate a diagonal vector for scrolling.
+
+        When multiple zwn_ray.axis events occur within the same frame, the
+        motion vector is the combined motion of all events. When a zwn_ray.axis
+        and a zwn_ray.axis_stop event occur within the same frame, this
+        indicates that axis movement in one axis has stopped but continues in
+        the other axis. When multiple zwn_ray.axis_stop events occur within the
+        same frame, this indicates that these axes stopped in the same instance.
+
+        A zwn_ray.frame event is sent for every logical event group, even if the
+        group only contains a single zwn_ray event. Specifically, a client may
+        get a sequence: motion, frame, button, frame, axis, frame, axis_stop,
+        frame.
+
+        The zwn_ray.enter and zwn_ray.leave events are logical events generated
+        by the compositor and not the hardware. These events are also grouped by
+        a zwn_ray.frame. When a ray moves from one virtual object to another, a
+        compositor should group the zwn_ray.leave event within the same
+        zwn_ray.frame. However, a client must not rely on zwn_ray.leave and
+        zwn_ray.enter being in the same zwn_ray.frame. Compositor-specific
+        policies may require the zwn_ray.leave and zwn_ray.enter event being
+        split across multiple zwn_ray.frame groups.
+      </description>
     </event>
 
     <request name="release" type="destructor">
-      <description summary="http://github.com/zwin-project/zwin/blob/main/docs/protocol/zwin/zwn_ray.adoc#release"/>
+      <description summary="release the ray object">
+        Using this request a client can tell the compositor that it is not going
+        to use the ray object anymore.
+
+        This request destroys the ray proxy object, so clients must not call
+        zwn_ray_destroy() after using this request.
+      </description>
     </request>
   </interface>
 </protocol>
