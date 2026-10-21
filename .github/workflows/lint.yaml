@@ -14,5 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Editorconfig Checker
-        uses: editorconfig-checker/action-editorconfig-checker@v4
+      - name: Set Up Editorconfig Checker
+        uses: editorconfig-checker/action-editorconfig-checker@main
+
+      - name: Run editorconfig-checker
+        uses: editorconfig-checker
