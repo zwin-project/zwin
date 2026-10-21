@@ -18,4 +18,4 @@ jobs:
         uses: editorconfig-checker/action-editorconfig-checker@main
 
       - name: Run editorconfig-checker
-        uses: editorconfig-checker
+        run: editorconfig-checker
