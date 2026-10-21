@@ -31,7 +31,7 @@ jobs:
 
       - run: ninja -C build test
 
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: Test_Log
